@@ -1,0 +1,17 @@
+.link-style {
+    display: flex;
+    gap: 0.5rem;
+    text-decoration: none;
+    color: red;
+}
+
+.btn-login {
+    background-color: green;
+    color: white;
+    border-radius: 20px;
+    padding: 0.3rem;
+} 
+
+a {
+    color: red;
+}
