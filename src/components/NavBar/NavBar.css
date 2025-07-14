@@ -1,6 +1,6 @@
 .link-style {
     display: flex;
-    gap: 0.5rem;
+    gap: 24px;
     text-decoration: none;
     color: red;
 }
@@ -9,9 +9,23 @@
     background-color: green;
     color: white;
     border-radius: 20px;
-    padding: 0.3rem;
+    padding: 0.7rem;
+    text-decoration: none;
 } 
 
-a {
-    color: red;
+.btn-login:hover {
+    background-color: transparent;
+    color: green;
+    border: solid green 1px;
+    transition: all ease 300ms;
 }
+
+.navbar-links a {
+    text-decoration: none;
+    color: black;
+}
+
+.navbar-links a:hover {
+    color: green;
+}
+

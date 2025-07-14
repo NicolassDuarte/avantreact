@@ -1,12 +1,13 @@
 import React from "react";
 import './NavBar.css'; // Onde ficarão nossos estilos
+import '../../App.css'
 
 const NavBar = () => {
   return (
     <nav className="navbar p-3">
       {/* Seção do Logo */}
       <div className="navbar-logo">
-        <a href="#inicio">
+        <a href="/">
           <img className="img-logo" src="logo.png" alt="Eco Troca" />
         </a>
       </div>
