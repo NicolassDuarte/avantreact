@@ -1,0 +1,42 @@
+.container{
+    
+}
+
+.row{
+    padding: 10px;
+    height: 100%;
+}
+
+#idtroca{
+    margin-top: 100px;
+}
+
+.col{
+    height: 100%;
+}
+
+.text-troca{
+    align-items: center;
+    
+}
+
+h5{
+    color: hsl(120, 100%, 29%);
+}
+
+.imgtroca{
+    height: 500px;
+    width: auto;
+    margin-left: 150px;
+}
+
+.objetos{
+    background-color: green;
+    color: white;
+    border-radius: 20px;
+    padding: 0.7rem;
+    text-decoration: none;
+    border: none;
+}
+
+#f3f6f7

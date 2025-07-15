@@ -6,7 +6,7 @@
 }
 
 .btn-login {
-    background-color: green;
+    background-color: #008000;
     color: white;
     border-radius: 20px;
     padding: 0.7rem;
@@ -15,7 +15,7 @@
 
 .btn-login:hover {
     background-color: transparent;
-    color: green;
+    color: #008000;
     border: solid green 1px;
     transition: all ease 300ms;
 }
@@ -26,6 +26,6 @@
 }
 
 .navbar-links a:hover {
-    color: green;
+    color: #008000;
 }
 

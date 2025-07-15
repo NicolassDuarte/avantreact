@@ -8,6 +8,7 @@ import Home from "./pages/Home"
 import Populares from './pages/Populares'
 import 'bootstrap/dist/css/bootstrap.min.css'
 
+
 function App() {
   return (
     
@@ -26,6 +27,7 @@ function App() {
         // <section className='card-rotation'></section>
         // <section className='card-comentarios'></section>
         // <Footer/> */}
+        
   )
 }
 
