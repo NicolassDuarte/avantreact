@@ -5,6 +5,7 @@ import Login from "./pages/Login"
 import Perfil from "./pages/Perfil"
 import Anuncios from "./pages/Anuncios"
 import Home from "./pages/Home"
+import CadastroProduto from "./pages/CadastroProduto"
 import 'bootstrap/dist/css/bootstrap.min.css'
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
           <Route path="/login" element={<Login />}/>
           <Route path="/perfil" element={<Perfil />}/>
           <Route path="/anuncios" element={<Anuncios />}/>
+          <Route path="/cadastro-produto" element={<CadastroProduto />}/>
         </Routes>
       </BrowserRouter>
         // {/* <Sessionnav/>
