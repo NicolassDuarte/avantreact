@@ -2,6 +2,7 @@ import React from "react";
 import NavBar from "../components/NavBar/NavBar";
 import Footer from '../components/Footer'
 
+
 const Home = () => {
     return (
         <div>
@@ -38,7 +39,7 @@ const Home = () => {
                 </div>
             </div>
             <div className="container">
-                <div className="row">
+                <div id="rowcarrosel" className="row">
                     <div id="carouselExampleDark" className="carousel carousel-dark slide">
                         <div className="carousel-indicators">
                             <button
@@ -63,28 +64,28 @@ const Home = () => {
                             ></button>
                         </div>
 
-                        <div className="carousel-inner">
+                        <div className="carousel-inner" style={{height: '700px',width:'auto'}}>
                             <div className="carousel-item active" data-bs-interval="10000">
                                 <img src="/sobrenos.png" className="d-block w-100" alt="Slide 1" />
-                                <div className="carousel-caption d-none d-md-block">
-                                    <h5>First slide label</h5>
-                                    <p>Some representative placeholder content for the first slide.</p>
+                                <div className="carousel-caption d-none d-md-block" style={{top:'550px'}}>
+                                    <h5>Produto Ilusorio 01</h5>
+                                    <p className="texto-carrosel">Some representative placeholder content for the first slide.</p>
                                 </div>
                             </div>
 
                             <div className="carousel-item" data-bs-interval="2000">
                                 <img src="/sobrenos.png" className="d-block w-100" alt="Slide 2" />
-                                <div className="carousel-caption d-none d-md-block">
-                                    <h5>Second slide label</h5>
-                                    <p>Some representative placeholder content for the second slide.</p>
+                                <div className="carousel-caption d-none d-md-block" style={{top:'550px'}}>
+                                    <h5>Produto Ilusorio 02</h5>
+                                    <p className="texto-carrosel">Some representative placeholder content for the second slide.</p>
                                 </div>
                             </div>
 
                             <div className="carousel-item">
                                 <img src="/sobrenos.png" className="d-block w-100" alt="Slide 3" />
-                                <div className="carousel-caption d-none d-md-block">
-                                    <h5>Third slide label</h5>
-                                    <p>Some representative placeholder content for the third slide.</p>
+                                <div className="carousel-caption d-none d-md-block" style={{top:'550px'}}>
+                                    <h5>Produto Ilusorio 03</h5>
+                                    <p className="texto-carrosel">Some representative placeholder content for the third slide.</p>
                                 </div>
                             </div>
                         </div>
@@ -111,13 +112,31 @@ const Home = () => {
                 </div>
             </div>
             
-            <div className="container">
+            <div className="container-md">
                 <div className="row">
                     <div className="col">
-                        <h3>Comentarios 1</h3>
+                        <div className="comment">
+                            <div className="comment-center">
+                                <img className="img-comment" src="/daniela.png" alt="" />
+                                <h3>Daniele Almeida</h3>
+                                <p>Ótimo serviço! Encantada <br/>
+                                com a qualidade dos produtos.</p>
+                                <img src="/estrela.png" alt="" />
+                            </div>
+                            
+                        </div>  
                     </div>
                     <div className="col">
-                        <h3>Comentarios 2</h3>
+                        <div className="comment">
+                            <div className="comment-center">
+                                <img className="img-comment" src="/ricardo.png" alt="" />
+                                <h3>Ricardo Franco</h3>
+                                <p>Não é apenas a troca  excelente, é <br/>
+                                o serviço que torna a experiência especial.</p>
+                                <img src="/estrela.png" alt="" />
+                            </div>
+                            
+                        </div>
                     </div>
                 </div>
             </div>

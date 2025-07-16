@@ -2,14 +2,24 @@
 
 const Footer = () => {
   return (
-    <div>
-      <div className="footer">
-        <a className="" href=""><img className="img-logo" src="logo.png" alt="" /></a>
-        <a className="" href="" target="_blank"><i className="fab fa-instagram">teste footer 1</i></a>
-        <a className="" href="" target="_blank"><i className="fab fa-facebook">teste footer 2</i></a>
-        <a className="" href="" target="_blank"><i className="fab fa-whatsapp">teste footer 3</i></a>
+    <footer className="container d-flex justify-content-between align-items-center mt-5 py-3 border-top">
+      {/* Logo à esquerda */}
+      <img src="/logo.png" alt="Logo" style={{ height: '40px' }} />
+
+      {/* Ícones sociais à direita */}
+      <div className="d-flex gap-2">
+        <button className="btn btn-primary rounded-circle p-2">
+          <i className="bi bi-facebook"></i>
+        </button>
+        <button className="btn btn-danger rounded-circle p-2">
+          <i className="bi bi-instagram"></i>
+        </button>
+        <button className="btn btn-info rounded-circle p-2">
+          <i className="bi bi-twitter"></i>
+        </button>
       </div>
-    </div>
+    </footer>
+
   )
 }
 
