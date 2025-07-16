@@ -6,6 +6,7 @@ import Perfil from "./pages/Perfil"
 import Anuncios from "./pages/Anuncios"
 import Home from "./pages/Home"
 import CadastroProduto from "./pages/CadastroProduto"
+import Item from "./pages/Item"
 import 'bootstrap/dist/css/bootstrap.min.css'
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
           <Route path="/perfil" element={<Perfil />}/>
           <Route path="/anuncios" element={<Anuncios />}/>
           <Route path="/cadastro-produto" element={<CadastroProduto />}/>
+          <Route path="/item" element={<Item />}/>'
         </Routes>
       </BrowserRouter>
         // {/* <Sessionnav/>

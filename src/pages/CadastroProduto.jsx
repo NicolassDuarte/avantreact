@@ -4,6 +4,8 @@ import { RiFileSearchFill } from "react-icons/ri";
 import { MdDescription } from "react-icons/md";
 import { FiPlusCircle } from "react-icons/fi";
 import React, { useState } from "react";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "../../assets/css/style.css"; // Importa o CSS customizado
 
 const tipoOptions = [
   "Eletrônico",
@@ -118,115 +120,77 @@ const Anuncios = () => {
   };
 
   return (
-    <div style={{ minHeight: "100vh", background: "#f5f5f5" }}>
+    <div className="cadastro-bg">
       <NavBar />
-      <div style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        minHeight: "90vh"
-      }}>
-        <div style={{
-          background: "#fff",
-          padding: "2rem",
-          borderRadius: "16px",
-          boxShadow: "0 2px 16px rgba(0,0,0,0.08)",
-          minWidth: "350px",
-          width: "100%",
-          maxWidth: "400px"
-        }}>
-          <h2 style={{ textAlign: "center", marginBottom: "2rem" }}>Cadastrar Produto</h2>
-          <form onSubmit={e => e.preventDefault()}>
-            {fields.map((field) => (
-              <div
-                key={field.key}
-                style={{ display: "flex", alignItems: "center", marginBottom: "1rem", cursor: "pointer" }}
-                onClick={() => openPopup(field)}
-              >
-                {field.icon}
-                <div style={{ flex: 1, padding: "0.5rem", borderRadius: "6px", border: "1px solid #ccc", background: "#fafafa" }}>
-                  {field.key === "localizacao"
-                    ? (
-                      values.localizacao && values.localizacao.cep
-                        ? limitarTexto(`${values.localizacao.rua}, ${values.localizacao.bairro}, ${values.localizacao.cidade} - ${values.localizacao.estado} (${values.localizacao.cep})`)
-                        : <span style={{ color: "#aaa" }}>{field.label}</span>
-                    )
-                    : field.key === "tipo"
-                      ? (values.tipo ? limitarTexto(values.tipo) : <span style={{ color: "#aaa" }}>{field.label}</span>)
-                      : values[field.key]
-                        ? (field.type === "date"
-                            ? limitarTexto(new Date(values[field.key]).toLocaleDateString("pt-BR"))
-                            : limitarTexto(values[field.key]))
-                        : <span style={{ color: "#aaa" }}>{field.label}</span>
-                  }
+      <div className="container cadastro-container">
+        <div className="row justify-content-center w-100">
+          <div className="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-5">
+            <div className="cadastro-card">
+              <h2 className="cadastro-title">Cadastrar Produto</h2>
+              <form onSubmit={e => e.preventDefault()}>
+                {fields.map((field) => (
+                  <div
+                    key={field.key}
+                    className="mb-3 d-flex align-items-center cadastro-field"
+                    onClick={() => openPopup(field)}
+                  >
+                    {field.icon}
+                    <div className="cadastro-field-value">
+                      {field.key === "localizacao"
+                        ? (
+                          values.localizacao && values.localizacao.cep
+                            ? limitarTexto(`${values.localizacao.rua}, ${values.localizacao.bairro}, ${values.localizacao.cidade} - ${values.localizacao.estado} (${values.localizacao.cep})`)
+                            : <span className="cadastro-placeholder">{field.label}</span>
+                        )
+                        : field.key === "tipo"
+                          ? (values.tipo ? limitarTexto(values.tipo) : <span className="cadastro-placeholder">{field.label}</span>)
+                          : values[field.key]
+                            ? (field.type === "date"
+                                ? limitarTexto(new Date(values[field.key]).toLocaleDateString("pt-BR"))
+                                : limitarTexto(values[field.key]))
+                            : <span className="cadastro-placeholder">{field.label}</span>
+                      }
+                    </div>
+                  </div>
+                ))}
+                {/* Adicionar foto como campo clicável */}
+                <div
+                  className="mb-4 d-flex align-items-center cadastro-foto"
+                  onClick={() => document.getElementById("input-foto").click()}
+                >
+                  <FaFileImage className="cadastro-foto-icon" />
+                  <div className="cadastro-foto-value">
+                    <span className={values.foto ? "cadastro-foto-nome" : "cadastro-placeholder"}>
+                      {values.foto ? limitarTexto(values.foto.name) : "Adicionar foto"}
+                    </span>
+                    <FiPlusCircle className="cadastro-foto-plus" />
+                    <input
+                      id="input-foto"
+                      type="file"
+                      accept="image/*"
+                      style={{ display: "none" }}
+                      onChange={handlePhoto}
+                    />
+                  </div>
                 </div>
-              </div>
-            ))}
-            {/* Adicionar foto como campo clicável */}
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                marginBottom: "2rem",
-                cursor: "pointer"
-              }}
-              onClick={() => document.getElementById("input-foto").click()}
-            >
-              <FaFileImage style={{ marginRight: 14, color: "#4caf50", fontSize: 24, verticalAlign: "middle" }} />
-              <div style={{ flex: 1, padding: "0.5rem", borderRadius: "6px", border: "1px solid #ccc", background: "#fafafa", display: "flex", alignItems: "center" }}>
-                <span style={{ flex: 1, color: values.foto ? "#222" : "#aaa" }}>
-                  {values.foto ? limitarTexto(values.foto.name) : "Adicionar foto"}
-                </span>
-                <FiPlusCircle style={{ color: "#4caf50", fontSize: 28, marginLeft: 8 }} />
-                <input
-                  id="input-foto"
-                  type="file"
-                  accept="image/*"
-                  style={{ display: "none" }}
-                  onChange={handlePhoto}
-                />
-              </div>
+                <button type="submit" className="btn btn-success w-100 fw-bold cadastro-btn">
+                  Salvar
+                </button>
+              </form>
             </div>
-            <button type="submit" style={{
-              width: "100%",
-              background: "#4caf50",
-              color: "#fff",
-              padding: "0.75rem",
-              border: "none",
-              borderRadius: "8px",
-              fontWeight: "bold",
-              fontSize: "1rem",
-              cursor: "pointer"
-            }}>
-              Salvar
-            </button>
-          </form>
+          </div>
         </div>
         {/* Popup */}
         {popup.open && (
-          <div style={{
-            position: "fixed",
-            top: 0, left: 0, right: 0, bottom: 0,
-            background: "rgba(0,0,0,0.3)",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            zIndex: 1000
-          }}>
-            <div style={{
-              background: "#fff",
-              padding: "2rem",
-              borderRadius: "12px",
-              minWidth: "300px",
-              boxShadow: "0 2px 16px rgba(0,0,0,0.15)"
-            }}>
-              <h3 style={{ marginBottom: "1.5rem" }}>{popup.field.label}</h3>
+          <div className="cadastro-popup-bg">
+            <div className="cadastro-popup">
+              <h3 className="cadastro-popup-title">{popup.field.label}</h3>
               {/* Campo tipo select */}
               {popup.field.type === "select" && (
                 <select
                   value={popup.tempValue}
                   onChange={e => setPopup(p => ({ ...p, tempValue: e.target.value }))}
-                  style={{ width: "100%", padding: "0.5rem", borderRadius: "6px", border: "1px solid #ccc", marginBottom: "1.5rem" }}
+                  className="cadastro-popup-input"
                   autoFocus
                 >
                   <option value="">Selecione...</option>
@@ -239,73 +203,65 @@ const Anuncios = () => {
               {popup.field.type === "localizacao" && (
                 <div>
                   {/* Linha 1: CEP */}
-                  <div style={{ display: "flex", gap: "0.5rem", marginBottom: "0.5rem" }}>
+                  <div className="d-flex gap-2 mb-2">
                     <input
                       type="text"
                       placeholder="CEP"
                       value={localizacaoTemp.cep}
                       onChange={e => setLocalizacaoTemp(l => ({ ...l, cep: e.target.value }))}
-                      style={{ flex: 1, padding: "0.5rem", borderRadius: "6px", border: "1px solid #ccc" }}
+                      className="cadastro-popup-input flex-fill"
                       maxLength={9}
                     />
                     <button
                       type="button"
                       onClick={handleBuscarCep}
-                      style={{
-                        background: "#4caf50",
-                        color: "#fff",
-                        border: "none",
-                        borderRadius: "6px",
-                        padding: "0.5rem 1rem",
-                        fontWeight: "bold",
-                        cursor: "pointer"
-                      }}
+                      className="btn btn-success cadastro-popup-btn"
                       disabled={loadingCep}
                     >
                       {loadingCep ? "Buscando..." : "Buscar"}
                     </button>
                   </div>
-                  {cepError && <div style={{ color: "red", marginBottom: "0.5rem" }}>{cepError}</div>}
+                  {cepError && <div className="cadastro-popup-error mb-2">{cepError}</div>}
                   {/* Linha 2: Logradouro */}
                   <input
                     type="text"
                     placeholder="Logradouro"
                     value={localizacaoTemp.rua}
                     onChange={e => setLocalizacaoTemp(l => ({ ...l, rua: e.target.value }))}
-                    style={{ width: "100%", padding: "0.5rem", borderRadius: "6px", border: "1px solid #ccc", marginBottom: "0.5rem" }}
+                    className="cadastro-popup-input mb-2"
                   />
                   {/* Linha 3: Número, Bairro */}
-                  <div style={{ display: "flex", gap: "0.5rem", marginBottom: "0.5rem" }}>
+                  <div className="d-flex gap-2 mb-2">
                     <input
                       type="text"
                       placeholder="Número"
                       value={localizacaoTemp.numero}
                       onChange={e => setLocalizacaoTemp(l => ({ ...l, numero: e.target.value }))}
-                      style={{ flex: 1, padding: "0.5rem", borderRadius: "6px", border: "1px solid #ccc" }}
+                      className="cadastro-popup-input flex-fill"
                     />
                     <input
                       type="text"
                       placeholder="Bairro"
                       value={localizacaoTemp.bairro}
                       onChange={e => setLocalizacaoTemp(l => ({ ...l, bairro: e.target.value }))}
-                      style={{ flex: 2, padding: "0.5rem", borderRadius: "6px", border: "1px solid #ccc" }}
+                      className="cadastro-popup-input flex-fill"
                     />
                   </div>
                   {/* Linha 4: Cidade, Estado */}
-                  <div style={{ display: "flex", gap: "0.5rem", marginBottom: "1.5rem" }}>
+                  <div className="d-flex gap-2 mb-3">
                     <input
                       type="text"
                       placeholder="Cidade"
                       value={localizacaoTemp.cidade}
                       onChange={e => setLocalizacaoTemp(l => ({ ...l, cidade: e.target.value }))}
-                      style={{ flex: 2, padding: "0.5rem", borderRadius: "6px", border: "1px solid #ccc" }}
+                      className="cadastro-popup-input flex-fill"
                     />
                     <input
                       type="text"
                       placeholder="Estado"
                       value={localizacaoTemp.estado}
                       onChange={e => setLocalizacaoTemp(l => ({ ...l, estado: e.target.value }))}
-                      style={{ flex: 1, padding: "0.5rem", borderRadius: "6px", border: "1px solid #ccc" }}
+                      className="cadastro-popup-input flex-fill"
                     />
                   </div>
                 </div>
@@ -316,7 +272,7 @@ const Anuncios = () => {
                   value={popup.tempValue}
                   onChange={e => setPopup(p => ({ ...p, tempValue: e.target.value }))}
                   rows={3}
-                  style={{ width: "100%", padding: "0.5rem", borderRadius: "6px", border: "1px solid #ccc", marginBottom: "1.5rem" }}
+                  className="cadastro-popup-input mb-3"
                   autoFocus
                 />
               )}
@@ -326,7 +282,7 @@ const Anuncios = () => {
                   type="text"
                   value={popup.tempValue}
                   onChange={e => setPopup(p => ({ ...p, tempValue: e.target.value }))}
-                  style={{ width: "100%", padding: "0.5rem", borderRadius: "6px", border: "1px solid #ccc", marginBottom: "1.5rem" }}
+                  className="cadastro-popup-input mb-3"
                   autoFocus
                 />
               )}
@@ -335,37 +291,22 @@ const Anuncios = () => {
                   type="date"
                   value={popup.tempValue}
                   onChange={e => setPopup(p => ({ ...p, tempValue: e.target.value }))}
-                  style={{ width: "100%", padding: "0.5rem", borderRadius: "6px", border: "1px solid #ccc", marginBottom: "1.5rem" }}
+                  className="cadastro-popup-input mb-3"
                   autoFocus
                 />
               )}
-              <div style={{ display: "flex", justifyContent: "flex-end", gap: "1rem" }}>
+              <div className="d-flex justify-content-end gap-2">
                 <button
                   type="button"
                   onClick={closePopup}
-                  style={{
-                    background: "#eee",
-                    color: "#333",
-                    border: "none",
-                    borderRadius: "6px",
-                    padding: "0.5rem 1.2rem",
-                    cursor: "pointer"
-                  }}
+                  className="btn btn-light cadastro-popup-btn"
                 >
                   Cancelar
                 </button>
                 <button
                   type="button"
                   onClick={handlePopupSave}
-                  style={{
-                    background: "#4caf50",
-                    color: "#fff",
-                    border: "none",
-                    borderRadius: "6px",
-                    padding: "0.5rem 1.2rem",
-                    fontWeight: "bold",
-                    cursor: "pointer"
-                  }}
+                  className="btn btn-success cadastro-popup-btn"
                 >
                   Salvar
                 </button>
