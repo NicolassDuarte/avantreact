@@ -1,24 +1,40 @@
 import NavBar from "../components/NavBar/NavBar"
+import "./Perfil.css"
+import { RiContactsFill } from "react-icons/ri";
+import { IoLogoDropbox } from "react-icons/io5";
+import { FaHeart } from "react-icons/fa";
+import { FaHandshakeAngle } from "react-icons/fa6";
+import { RiLockPasswordFill } from "react-icons/ri";
+import { BiSolidHelpCircle } from "react-icons/bi";
+import { IoExitOutline } from "react-icons/io5";
+import { CgProfile } from "react-icons/cg";
+
 
 const Perfil = () => {
-  return (
-    <div>
-      <NavBar />
-      <h1>Perfil do usuario</h1>
-      <div className="card">
-        <img src="perfilp.png" alt="Ver perfil" />
-        <ul className="profile-itens">
-          <li>Meus dados pessoais</li>
-          <li>Minhas trocas</li>
-          <li>Lista de desejos</li>
-          <li>Meus Itens</li>
-          <li>Alterar senha</li>
-          <li>Ajuda</li>
-          <li>Sair</li>
-        </ul>
-      </div>
+
+return (
+
+    <div className="profile-section">
+        <NavBar />
+        <div className="bg-page">
+            <div className="cardProfile">
+            <CgProfile className="cgprofile" />
+                <ul className="profile-itens">
+                    <li><RiContactsFill /> Dados pessoais</li>
+                    <li><FaHandshakeAngle /> Minhas trocas</li>
+                    <li><FaHeart /> Lista de desejos</li>
+                    <li><IoLogoDropbox /> Meus Itens</li>
+                    <li><RiLockPasswordFill /> Alterar senha</li>
+                    <li><BiSolidHelpCircle /> Ajuda</li>
+                    <li><IoExitOutline /> Sair</li>
+                </ul>
+            </div>
+        </div>
     </div>
-  )
+ )
+
 };
+
+
 
 export default Perfil;
