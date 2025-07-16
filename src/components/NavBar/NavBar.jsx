@@ -20,6 +20,9 @@ const NavBar = () => {
             <a href="/login">Sobre Nós</a>
             <a href="/populares">Populares</a>
             <a href="/anuncios">Anuncie</a>
+            <a href="/cadastro-produto">Cadastrar Produto</a>
+            <a href="/item">Item</a>
+
           </div>
 
           {/* Ações do Usuário */}

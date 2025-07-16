@@ -6,6 +6,8 @@ import Perfil from "./pages/Perfil"
 import Anuncios from "./pages/Anuncios"
 import Home from "./pages/Home"
 import Populares from './pages/Populares'
+import CadastroProduto from "./pages/CadastroProduto"
+import Item from "./pages/Item"
 import 'bootstrap/dist/css/bootstrap.min.css'
 
 
@@ -19,6 +21,8 @@ function App() {
         <Route path="/perfil" element={<Perfil />} />
         <Route path="/anuncios" element={<Anuncios />} />
         <Route path="/populares" element={<Populares />} />
+          <Route path="/cadastro-produto" element={<CadastroProduto />}/>
+          <Route path="/item" element={<Item />}/>'
       </Routes>
     </BrowserRouter>
     // {/* <Sessionnav/>
