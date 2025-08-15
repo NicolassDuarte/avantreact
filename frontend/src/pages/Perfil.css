@@ -1,0 +1,48 @@
+
+.profile-section {
+    display: flex;
+    flex-direction: column; 
+    min-height: 100vh; 
+}
+
+
+.bg-page {
+    flex-grow: 1; 
+    background-image: url('../assets/background-login.png');
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.cardProfile {
+    background-color: #f9f9f9;
+    padding: 3rem;
+    border-radius: 8px;
+    width: 400px;
+    text-align: center;
+}
+
+.cgprofile {
+    font-size: 120px;
+    color: #555;
+}
+
+
+.profile-itens {
+    list-style: none;
+    padding: 0;
+    text-align: left;
+}
+
+.profile-itens li {
+    padding: 8px 0; 
+    font-size: 1.125rem;
+}
+
+.profile-itens li:hover {
+    cursor: pointer;
+    font-weight: 600;
+}

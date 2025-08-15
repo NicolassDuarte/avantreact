@@ -1,0 +1,31 @@
+.link-style {
+    display: flex;
+    gap: 24px;
+    text-decoration: none;
+    color: red;
+}
+
+.btn-login {
+    background-color: #008000;
+    color: white;
+    border-radius: 20px;
+    padding: 0.7rem;
+    text-decoration: none;
+} 
+
+.btn-login:hover {
+    background-color: transparent;
+    color: #008000;
+    border: solid green 1px;
+    transition: all ease 300ms;
+}
+
+.navbar-links a {
+    text-decoration: none;
+    color: black;
+}
+
+.navbar-links a:hover {
+    color: #008000;
+}
+

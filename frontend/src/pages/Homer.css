@@ -1,0 +1,69 @@
+.container{
+    
+}
+
+.row{
+    padding: 10px;
+    height: 100%;
+}
+
+#idtroca{
+    margin-top: 100px;
+}
+
+.col{
+    height: 100%;
+}
+
+.text-troca{
+    align-items: center;
+    
+}
+
+h5{
+    color: hsl(120, 100%, 29%);
+    text-decoration-thickness: 3px;
+    font-weight: 500;
+}
+
+.texto-carrosel{
+    text-decoration-thickness: 10px;
+    font-weight: 700;
+}
+
+
+.imgtroca{
+    height: 500px;
+    width: auto;
+    margin-left: 150px;
+}
+
+.objetos{
+    background-color: green;
+    color: white;
+    border-radius: 20px;
+    padding: 0.7rem;
+    text-decoration: none;
+    border: none;
+}
+
+.comment{
+    width: 592px;
+    height: 390px;
+    background-color: #f1f8e9;
+    font-size: 29px;
+    border-radius: 8px;
+    align-items: center;
+}
+
+.comment-center{
+    margin-left: 30px;
+    margin-top: 30px;
+}
+
+.img-comment{
+    margin-top: 50px;
+}
+
+#f3f6f7
+

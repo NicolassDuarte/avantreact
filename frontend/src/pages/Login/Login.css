@@ -1,0 +1,111 @@
+.login-container {
+    min-height: 100vh;
+    background-position: center;
+    font-family: 'Poppins', sans-serif;
+}
+
+.header {
+    background-color: white;
+    height: 70px;
+}
+
+.logo {
+    height: 40px;
+    margin-right: 8px;
+}
+
+.logo-text {
+    font-weight: bold;
+    color: #8b6f4e;
+    font-size: 1.2rem;
+}
+
+.user-icon {
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+}
+
+.main-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: calc(100vh - 70px);
+    background-image: url('../../assets/background-login.png');
+    background-size: cover;
+    padding: 2rem 1rem;
+}
+
+.login-box {
+    background: white;
+    padding: 2rem;
+    border-radius: 16px;
+    max-width: 400px;
+    width: 100%;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.div-input {
+    height: 45px;
+}
+
+.input-group .input-group-text,
+.input-group .form-control {
+    border: none !important;
+    box-shadow: none !important;
+    border-radius: 10px;
+}
+
+.classColor {
+    background-color: #E9F7EC !important;
+}
+
+.imgClass {
+    height: 19px;
+    width: 19px;
+}
+
+.forgot-password {
+    font-size: 0.9rem;
+    color: #000000;
+    text-decoration: none;
+}
+
+.forgot-password:hover {
+    text-decoration: underline;
+}
+
+.signup-link {
+    font-weight: bold;
+    color: #2d7a2d;
+    text-decoration: none;
+}
+
+.signup-link:hover {
+    text-decoration: underline;
+}
+
+.btn-entrar {
+    background-color: #2D7A2D;
+    color: white;
+    border-radius: 25px;
+    padding: 0.7rem;
+    font-weight: bold;
+    font-size: 1rem;
+    width: 60%;
+    margin: 0 auto;
+    display: block;
+    transition: background-color 0.3s ease;
+}
+
+.btn-entrar:hover {
+    background-color: #256025;
+}
+
+.cadastreContainer {
+    margin-top: -0.5rem;
+    text-align: center;
+    color: white;
+    font-size: 0.9rem;
+}

@@ -1,0 +1,80 @@
+/* Estilos Gerais */
+.text-troca h3, .text-troca h5 {
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.objetos {
+    /* Adicione aqui os estilos do seu botão */
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+/* Seção do Carrossel */
+.carousel-inner {
+    /* Altura máxima para desktop */
+    max-height: 650px; 
+    border-radius: 8px; /* Opcional: bordas arredondadas */
+}
+
+.carousel-caption {
+    /* Posição da legenda um pouco acima */
+    bottom: 3rem; 
+    background-color: rgba(0, 0, 0, 0.3); /* Fundo para melhorar a leitura */
+    border-radius: 5px;
+    padding: 1rem;
+}
+
+/* Seção de Comentários */
+.comment {
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 2rem;
+    height: 100%; /* Faz com que os cards tenham a mesma altura na mesma linha */
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+.comment-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.img-comment {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%; /* Deixa a imagem redonda */
+    object-fit: cover;
+    margin-bottom: 1rem;
+}
+
+/* ======================================= */
+/* MEDIA QUERIES             */
+/* ======================================= */
+
+/* Estilos para telas pequenas (Mobile) - até 767px */
+@media (max-width: 767.98px) {
+    .text-troca {
+        /* Garante que o texto esteja centralizado no mobile */
+        text-align: center;
+    }
+
+    .carousel-inner {
+        /* Altura menor e mais apropriada para celulares */
+        height: 400px;
+    }
+
+    /* No mobile, a legenda pode ficar muito grande. Podemos escondê-la ou diminuí-la. */
+    .carousel-caption .texto-carrosel {
+        display: none;
+    }
+
+    .carousel-caption h5 {
+        font-size: 1.1rem;
+    }
+}
