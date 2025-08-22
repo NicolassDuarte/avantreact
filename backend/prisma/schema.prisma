@@ -14,60 +14,60 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Usuario {
-  id Int @id @default(autoincrement())
+model usuario {
+  id_usuario Int @id @default(autoincrement())
   nome String
   email String @unique
   senha String
   criadoEm DateTime @default(now())
   atualizadoEm DateTime @updatedAt
-  itens Item[]
-  trocasEnviadas Troca[] @relation("TrocasEnviadas")
-  trocasRecebidas Troca[] @relation("TrocasRecebidas")
+  itens item[]
+  trocasEnviadas troca[] @relation("TrocasEnviadas")
+  trocasRecebidas troca[] @relation("TrocasRecebidas")
 }
 
-model Item {
-   id         Int         @id @default(autoincrement())
+model item {
+  id_item         Int         @id @default(autoincrement())
   titulo     String
   descricao  String
   cidade     String
   bairro     String
   endereco   String
   imagemUrl  String
-  status     StatusItem  @default(DISPONIVEL)
+  status     statusItem  @default(DISPONIVEL)
   criadoEm   DateTime    @default(now())
   atualizadoEm DateTime  @updatedAt
   donoId     Int
   categoriaId Int
-  dono       Usuario     @relation(fields: [donoId], references: [id])
-  categoria  Categoria   @relation(fields: [categoriaId], references: [id])
-  trocaOferecida Troca[] @relation("ItemOferecido")
-  trocaDesejada  Troca[] @relation("ItemDesejado")
+  dono       usuario     @relation(fields: [donoId], references: [id_usuario])
+  categoria  categoria   @relation(fields: [categoriaId], references: [id_categoria])
+  trocaOferecida troca[] @relation("ItemOferecido")
+  trocaDesejada  troca[] @relation("ItemDesejado")
 }
 
-model Categoria {
-  id      Int    @id @default(autoincrement())
+model categoria {
+  id_categoria      Int    @id @default(autoincrement())
   nome    String @unique
-  itens   Item[]
+  itens   item[]
 }
 
-model Troca {
-  id           Int         @id @default(autoincrement())
+model troca {
+  id_troca           Int         @id @default(autoincrement())
   itemOferecidoId Int
   itemDesejadoId  Int
-  status       StatusTroca @default(PENDENTE)
+  status       statusTroca @default(PENDENTE)
   criadoEm     DateTime    @default(now())
   atualizadoEm DateTime    @updatedAt
   ofertanteId  Int
   receptorId   Int
 
-  itemOferecido Item    @relation("ItemOferecido", fields: [itemOferecidoId], references: [id])
-  itemDesejado  Item    @relation("ItemDesejado", fields: [itemDesejadoId], references: [id])
-  ofertante     Usuario @relation("TrocasEnviadas", fields: [ofertanteId], references: [id])
-  receptor      Usuario @relation("TrocasRecebidas", fields: [receptorId], references: [id])
+  itemOferecido item    @relation("ItemOferecido", fields: [itemOferecidoId], references: [id_item])
+  itemDesejado  item    @relation("ItemDesejado", fields: [itemDesejadoId], references: [id_item])
+  ofertante     usuario @relation("TrocasEnviadas", fields: [ofertanteId], references: [id_usuario])
+  receptor      usuario @relation("TrocasRecebidas", fields: [receptorId], references: [id_usuario])
 }
 
-enum StatusTroca {
+enum statusTroca {
   PENDENTE
   ACEITA
   RECUSADA
@@ -75,7 +75,7 @@ enum StatusTroca {
   CANCELADA
 }
 
-enum StatusItem {
+enum statusItem {
   DISPONIVEL
   NEGOCIANDO
   INDISPONIVEL
