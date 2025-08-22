@@ -52,3 +52,11 @@ const updateCategoria = async (id_categoria, nome, itens) => {
     },
   });
 };
+
+module.exports = {
+  getAllCategorias,
+  getCategoriaById,
+  addCategoria,
+  deleteCategoria,
+  updateCategoria,
+};

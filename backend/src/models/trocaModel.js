@@ -51,3 +51,11 @@ const deleteTroca = async (id_troca) => {
     },
   });
 };
+
+module.exports = {
+  getAllTrocas,
+  getTrocaById,
+  getTrocasByUsuario,
+  addTroca,
+  deleteTroca,
+};
