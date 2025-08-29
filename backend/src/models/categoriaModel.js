@@ -12,6 +12,7 @@ const getCategoriaById = async (id_categoria) => {
   return await prisma.categoria.findUnique({
     where: {
       id_categoria: id_categoria,
+      include: { itens: true },
     },
   });
 };
@@ -37,7 +38,7 @@ const deleteCategoria = async (id_categoria) => {
 };
 
 const updateCategoria = async (id_categoria, nome, itens) => {
-  const categoria = getCategoriaById(id_categoria);
+  const categoria = await getCategoriaById(id_categoria);
   if (!categoria) {
     throw new Error("Categoria não encontrada");
   }
@@ -58,5 +59,5 @@ module.exports = {
   getCategoriaById,
   addCategoria,
   deleteCategoria,
-  updateCategoria,
+  updateCategoria
 };

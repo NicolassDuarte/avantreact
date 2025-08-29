@@ -16,16 +16,17 @@ const getUsuarioById = async (id_usuario) => {
   });
 };
 
-const addUsuario = async (nome, email) => {
+const addUsuario = async (nome, email,senha) => {
   return prisma.usuario.create({
     data: {
       nome: nome,
       email: email,
+      senha: senha,
     },
   });
 };
 
-const updateUsuario = async (id_usuario, nome, email) => {
+const updateUsuario = async (id_usuario, nome, email,senha) => {
   const usuario = await getUsuarioById(id_usuario);
 
   if (!usuario) {
@@ -33,12 +34,11 @@ const updateUsuario = async (id_usuario, nome, email) => {
   }
 
   return prisma.usuario.update({
-    where: {
-      id_usuario: id_usuario,
-    },
+    where: {id_usuario},
     data: {
       nome: nome,
       email: email,
+      senha: senha,
     },
   });
 };
@@ -62,5 +62,5 @@ module.exports = {
   getUsuarioById,
   addUsuario,
   updateUsuario,
-  deleteUsuario,
+  deleteUsuario
 };
