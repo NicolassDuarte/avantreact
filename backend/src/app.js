@@ -12,7 +12,7 @@ app.use("/api/usuarios", usuarioRoutes);
 //app.use(itemRoutes);
 app.use("/categorias", categoriasRoutes);
 
-app.use("/api", usuarioRoutes);
+
 
 app.get("/", (req, res) => {
   res.send("api ok!!");

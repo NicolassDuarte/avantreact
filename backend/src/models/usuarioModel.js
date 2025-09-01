@@ -1,18 +1,17 @@
-const prisma = require("../prisma");
+const { PrismaClient } = require("../../generated/prisma");
+const prisma = new PrismaClient()
 
 const getAllUsuarios = async () => {
   return prisma.usuario.findMany({
     orderBy: {
-      nome: "DESC",
+      nome: "desc",
     },
   });
 };
 
 const getUsuarioById = async (id_usuario) => {
   return prisma.usuario.findUnique({
-    where: {
-      id_usuario: id_usuario,
-    },
+    where: {id_usuario}
   });
 };
 
