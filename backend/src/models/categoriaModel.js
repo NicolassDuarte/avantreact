@@ -1,4 +1,6 @@
-const prisma = require("../prisma");
+const { PrismaClient } = require("../../generated/prisma");
+const prisma = new PrismaClient()
+
 
 const getAllCategorias = async () => {
   return await prisma.categoria.findMany({
@@ -9,13 +11,13 @@ const getAllCategorias = async () => {
 };
 
 const getCategoriaById = async (id_categoria) => {
+  console.log("ID recebido no model:", id_categoria); // debug
   return await prisma.categoria.findUnique({
-    where: {
-      id_categoria: id_categoria,
-      include: { itens: true },
-    },
+    where: { id_categoria: parseInt(id_categoria) },
+    include: { itens: true }
   });
 };
+
 
 const addCategoria = async (nome) => {
   return await prisma.categoria.create({
@@ -26,33 +28,36 @@ const addCategoria = async (nome) => {
 };
 
 const deleteCategoria = async (id_categoria) => {
-  const categoria = getCategoriaById(id_categoria);
-  if (!categoria) {
-    throw new Error("Categoria não encontrada");
-  }
-  return await prisma.categoria.delete({
-    where: {
-      id_categoria: id_categoria,
-    },
+  const categoria = await prisma.categoria.findUnique({
+    where: { id_categoria: parseInt(id_categoria) }
   });
+  if (!categoria) {
+    return null; 
+  }
+  await prisma.categoria.delete({
+    where: { id_categoria: parseInt(id_categoria) }
+  });
+  return categoria; 
 };
 
-const updateCategoria = async (id_categoria, nome, itens) => {
-  const categoria = await getCategoriaById(id_categoria);
+const updateCategoria = async (id_categoria, nome) => {
+  const categoria = await prisma.categoria.findUnique({
+    where: { id_categoria },
+  });
+
   if (!categoria) {
     throw new Error("Categoria não encontrada");
   }
 
   return await prisma.categoria.update({
-    where: {
-      id_categoria: id_categoria,
-    },
+    where: { id_categoria },
     data: {
       nome: nome,
-      itens: itens,
     },
+    include: { itens: true }, 
   });
 };
+
 
 module.exports = {
   getAllCategorias,

@@ -1,20 +1,21 @@
-import express from "express";
+const express = require("express");
 const app = express();
-const categoriasRoutes = reuqire("./routes/categoriasRoutes.js")
+app.use(express.json());
+const categoriasRoutes = require("./routes/categoriasRoutes.js")
 const usuarioRoutes = require('./routes/usuarioRoutes')
 
-app.use(express.json());
+
 
 
 app.use("/api/usuarios", usuarioRoutes);
-app.use("/api/usuarios/:id/trocas", trocasRoutes);
-app.use(itemRoutes);
-app.use("/categorias", categoriaRoutes);
+//app.use("/api/usuarios/:id/trocas", trocasRoutes);
+//app.use(itemRoutes);
+app.use("/categorias", categoriasRoutes);
 
 app.use("/api", usuarioRoutes);
 
-app.get("/", (res, req) => {
-  res.setEncoding("api ok!!");
+app.get("/", (req, res) => {
+  res.send("api ok!!");
 });
 
 module.exports = app;

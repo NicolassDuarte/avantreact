@@ -39,16 +39,16 @@ const createCategoriaHandler = async (req, res) => {
     if (error.code === "P2002") {
       return res.status(400).json({ error: "Categoria já existe" });
     }
-
+    console.log(error)
     return res.status(500).json({ error: "Erro ao criar categoria" });
   }
 };
 
 const deleteCategoriaHandler = async (req,res) =>{
-    const nome = String(req.params.nome)
+    const id_categoria = Number(req.params.id_categoria)
     try{
-        await deleteCategoria(nome)
-        return res.status(204).send(nome)
+        await deleteCategoria(id_categoria)
+        return res.status(204).send(id_categoria)
     }catch(error){
         if(error.message ==='Categoria não encontrada!'){
             return res.status(404).json({error:'Categoria não encontrada!'})
@@ -59,16 +59,11 @@ const deleteCategoriaHandler = async (req,res) =>{
 }
 
 const updateCategoriaHandler = async (req, res) => {
-  const { id_categoria } = req.params; // vem da URL
-  const { nome, itens } = req.body;    // vem do JSON enviado no body
+  const { id_categoria } = req.params;
+  const { nome } = req.body;
 
   try {
-    const categoriaAtualizada = await updateCategoria(
-      Number(id_categoria), 
-      nome,
-      itens
-    );
-
+    const categoriaAtualizada = await updateCategoria(Number(id_categoria), nome);
     return res.status(200).json(categoriaAtualizada);
   } catch (error) {
     console.error(error);
@@ -80,6 +75,7 @@ const updateCategoriaHandler = async (req, res) => {
     return res.status(500).json({ error: "Erro ao atualizar categoria" });
   }
 };
+
 
 
 
