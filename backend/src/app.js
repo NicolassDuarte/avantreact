@@ -1,21 +1,22 @@
 const express = require("express");
 const app = express();
 app.use(express.json());
-const categoriasRoutes = require("./routes/categoriasRoutes.js")
-const usuarioRoutes = require('./routes/usuarioRoutes')
 
+// Importando rotas
+const categoriasRoutes = require("./routes/categoriasRoutes");
+const usuarioRoutes = require("./routes/usuarioRoutes");
+const trocasRoutes = require("./routes/trocaRoutes");
+const itensRoutes = require("./routes/itemRoutes");
 
-
-
+// Registrando rotas
 app.use("/api/usuarios", usuarioRoutes);
-//app.use("/api/usuarios/:id/trocas", trocasRoutes);
-//app.use(itemRoutes);
-app.use("/categorias", categoriasRoutes);
+app.use("/api/trocas", trocasRoutes);
+app.use("/api/itens", itensRoutes);
+app.use("/api/categorias", categoriasRoutes);
 
-app.use("/api", usuarioRoutes);
-
+// Rota raiz
 app.get("/", (req, res) => {
-  res.send("api ok!!");
+  res.send("API ok!!");
 });
 
 module.exports = app;
