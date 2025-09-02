@@ -1,10 +1,10 @@
 const express = require('express')
 const router = express.Router()
-const {getAllUsuariosHandler,getUsarioByIdHandler,addUsuarioHandler,uppdateUsuarioHandler,deleteUsuarioHandler} = require('../controllers/usuarioController')
+const {getAllUsuariosHandler,getUsuarioByIdHandler,addUsuarioHandler,uppdateUsuarioHandler,deleteUsuarioHandler} = require('../controllers/usuarioController')
 
 router.get('/',getAllUsuariosHandler)
-router.get('/:id_usuario',getUsarioByIdHandler)
-router.post('/usuarios',addUsuarioHandler)
+router.get('/:id_usuario',getUsuarioByIdHandler)
+router.post('/',addUsuarioHandler)
 router.put('/:id_usuario',uppdateUsuarioHandler)
 router.delete('/:id_usuario',deleteUsuarioHandler)
 

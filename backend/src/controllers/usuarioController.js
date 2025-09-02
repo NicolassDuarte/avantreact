@@ -6,11 +6,12 @@ const getAllUsuariosHandler = async (req,res) =>{
         return res.status(200).json(usuarios)
     }
     catch(error){
+        console.log(error)
         res.status(500).json({error:'Error ao buscar usuarios'})
     }
 }
 
-const getUsarioByIdHandler = async (req,res) =>{
+const getUsuarioByIdHandler = async (req,res) =>{
     const id_usuario = Number.parseInt(req.params.id_usuario, 10); 
     try{
         const usuario = await getUsuarioById (id_usuario)
@@ -70,7 +71,7 @@ const deleteUsuarioHandler = async(req,res) =>{
 
 module.exports = {
     getAllUsuariosHandler,
-    getUsarioByIdHandler,
+    getUsuarioByIdHandler,
     addUsuarioHandler,
     uppdateUsuarioHandler,
     deleteUsuarioHandler
