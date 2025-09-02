@@ -1,4 +1,10 @@
-const { getAllItens, getItemById, addItem, updateItem, deleteItem } = require("../models/itemModel");
+const {
+  getAllItens,
+  getItemById,
+  addItem,
+  updateItem,
+  deleteItem,
+} = require("../models/itemModel");
 
 const getAllItensHandler = async (req, res) => {
   try {
@@ -24,9 +30,17 @@ const getItemByIdHandler = async (req, res) => {
 };
 
 const addItemHandler = async (req, res) => {
-  const { titulo, descricao, cidade, bairro, endereco, imagemUrl, donoId, categoriaId } = req.body;
   try {
-    const novoItem = await addItem(titulo, descricao, cidade, bairro, endereco, imagemUrl, donoId, categoriaId);
+    const novoItem = await addItem(
+      titulo,
+      descricao,
+      cidade,
+      bairro,
+      endereco,
+      imagemUrl,
+      donoId,
+      categoriaId
+    );
     return res.status(201).json(novoItem);
   } catch (error) {
     console.error(error);
@@ -36,9 +50,19 @@ const addItemHandler = async (req, res) => {
 
 const updateItemHandler = async (req, res) => {
   const id_item = Number(req.params.id_item);
-  const { titulo, descricao, cidade, bairro, endereco, imagemUrl, status } = req.body;
+  const { titulo, descricao, cidade, bairro, endereco, imagemUrl, status } =
+    req.body;
   try {
-    const itemAtualizado = await updateItem(id_item, titulo, descricao, cidade, bairro, endereco, imagemUrl, status);
+    const itemAtualizado = await updateItem(
+      id_item,
+      titulo,
+      descricao,
+      cidade,
+      bairro,
+      endereco,
+      imagemUrl,
+      status
+    );
     return res.status(200).json(itemAtualizado);
   } catch (error) {
     console.error(error);
