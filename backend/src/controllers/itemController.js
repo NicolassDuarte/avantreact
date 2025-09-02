@@ -30,6 +30,16 @@ const getItemByIdHandler = async (req, res) => {
 };
 
 const addItemHandler = async (req, res) => {
+  const {
+    titulo,
+    descricao,
+    cidade,
+    bairro,
+    endereco,
+    imagemUrl,
+    donoId,
+    categoriaId,
+  } = req.body;
   try {
     const novoItem = await addItem(
       titulo,

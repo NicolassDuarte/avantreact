@@ -1,4 +1,5 @@
-const prisma = require("../prisma");
+const { PrismaClient } = require("../../generated/prisma");
+const prisma = new PrismaClient();
 
 const getAllItens = async () => {
   return prisma.item.findMany({
