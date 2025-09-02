@@ -1,4 +1,5 @@
-const prisma = require("../prisma");
+const { PrismaClient } = require("../../generated/prisma");
+const prisma = new PrismaClient();
 
 const getAllTrocas = async () => {
   return await prisma.troca.findMany({
@@ -30,6 +31,12 @@ const addTroca = async (
   ofertanteId,
   receptorId
 ) => {
+  console.log("Valores recebidos para criar a troca:", {
+    itemOferecidoId,
+    itemDesejadoId,
+    ofertanteId,
+    receptorId,
+  });
   return prisma.troca.create({
     data: {
       itemOferecidoId: itemOferecidoId,
