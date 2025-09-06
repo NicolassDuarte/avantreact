@@ -1,0 +1,190 @@
+.section-home {
+    padding: 80px 0;
+}
+
+/* ===== INÍCIO ===== */
+.hero {
+    background-color: #ffffff;
+}
+
+.hero .text-troca h2 {
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.hero .text-troca p {
+    color: #555;
+    margin-bottom: 25px;
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+.hero .btn-objetos {
+    background-color: #1f9d55;
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 30px;
+    font-weight: 500;
+    transition: 0.3s;
+    font-size: 1rem;
+    text-decoration: none;
+    /* remove sublinhado */
+    display: inline-block;
+    /* garante que se comporte como botão */
+}
+
+.hero .btn-objetos:hover {
+    background-color: #198754;
+    text-decoration: none;
+    /* mantém sem sublinhado no hover */
+}
+
+.hero .img-hero {
+    max-width: 350px;
+    border-radius: 12px;
+}
+
+/* ===== SOBRE NÓS ===== */
+.sobre {
+    background-color: #f7f9f8;
+}
+
+.sobre .subtitulo {
+    color: #1f9d55;
+    font-weight: bold;
+    margin-bottom: 12px;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.sobre h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.sobre p {
+    color: #444;
+    line-height: 1.6;
+    font-size: 1rem;
+}
+
+.img-sobre {
+    max-width: 350px;
+    border-radius: 12px;
+}
+
+/* ===== POPULARES ===== */
+.populares {
+    /* background-color: #ffffff; */
+    background-color: #f7f9f8;
+}
+
+.populares .card-popular {
+    background: #f8fff8;
+    border-radius: 12px;
+    padding: 25px;
+    margin: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s;
+    min-height: 300px;
+    text-align: center;
+}
+
+.populares .card-popular:hover {
+    transform: translateY(-5px);
+}
+
+.populares .img-popular {
+    width: 140px;
+    height: auto;
+    margin-bottom: 15px;
+}
+
+.populares h5 {
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.populares p {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 15px;
+}
+
+.populares .btn-trocar {
+    background-color: #1f9d55;
+    border: none;
+    color: #fff;
+    padding: 8px 20px;
+    border-radius: 6px;
+    transition: 0.3s;
+}
+
+.populares .btn-trocar:hover {
+    background-color: #198754;
+}
+
+/* ===== COMENTÁRIOS ===== */
+.comentarios {
+    /* background-color: #f7f9f8; */
+    background-color: #ffffff;
+}
+
+.comentarios .row {
+    display: flex;
+    gap: 20px;
+}
+
+.comentarios .card-comentario {
+    /* background: #ffffff; */
+    background: #f7f9f8;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    flex: 1;
+    /* ocupa espaço igualmente */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    /* distribui conteúdo */
+    text-align: center;
+    min-height: 230px;
+    /* garante mesma altura */
+}
+
+.comentarios .img-comentario {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 12px;
+}
+
+.comentarios h5 {
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.comentarios p {
+    font-size: 0.95rem;
+    color: #555;
+    margin-bottom: 10px;
+    flex-grow: 1;
+    /* empurra estrelas para baixo */
+}
+
+.comentarios .estrelas {
+    color: #ffb400;
+    font-size: 1rem;
+    margin-top: 10px;
+}
+
+.imgClassItem {
+    height: 150px;
+    width: 130px;
+}

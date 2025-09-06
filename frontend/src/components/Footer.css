@@ -1,3 +1,58 @@
-.logo-footer{
-    
+.footer {
+    background-color: #ffffff;
+    border-top: 1px solid #e0e0e0;
+    padding: 30px 0;
+    /* altura maior para evitar “duas cores” */
+}
+
+.footer hr {
+    width: 80%;
+    /* Largura da linha (ajuste conforme necessário) */
+    margin: 0 auto;
+    /* Centraliza horizontalmente */
+    border: 0;
+    /* Remove bordas padrão */
+    border-top: 1px solid #e0e0e0;
+    /* Adiciona a linha */
+    margin-top: 1rem;
+    /* Espaço acima da linha */
+    margin-bottom: 1rem;
+    /* Espaço abaixo da linha */
+    border-color: black;
+}
+
+.logo-footer {
+    height: 32px;
+}
+
+.brand-name {
+    font-weight: 600;
+    font-size: 1rem;
+    color: #444;
+}
+
+.social-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border: 1px solid #ccc;
+    border-radius: 50%;
+    font-size: 1.1rem;
+    color: #444;
+    transition: all 0.3s ease;
+}
+
+.social-icon:hover {
+    background-color: #1f9d55;
+    color: #fff;
+    border-color: #1f9d55;
+}
+
+.copyright {
+    font-size: 0.9rem;
+    color: #777;
+    margin-top: 10px;
+    /* espaço abaixo da linha */
 }

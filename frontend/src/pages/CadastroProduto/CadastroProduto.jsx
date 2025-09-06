@@ -1,11 +1,12 @@
-import NavBar from "../components/NavBar/NavBar"
+import NavBar from "../../components/NavBar/NavBar"
 import { FaMapMarkerAlt, FaCalendarAlt, FaBoxOpen, FaFileImage } from "react-icons/fa";
 import { RiFileSearchFill } from "react-icons/ri";
 import { MdDescription } from "react-icons/md";
 import { FiPlusCircle } from "react-icons/fi";
 import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "../assets/css/style.css"; // Importa o CSS customizado
+// import "../../assets/css/style.css"; // Importa o CSS customizado
+import "./CadastroProduto.css";
 
 const tipoOptions = [
   "Eletrônico",
@@ -146,8 +147,8 @@ const Anuncios = () => {
                           ? (values.tipo ? limitarTexto(values.tipo) : <span className="cadastro-placeholder">{field.label}</span>)
                           : values[field.key]
                             ? (field.type === "date"
-                                ? limitarTexto(new Date(values[field.key]).toLocaleDateString("pt-BR"))
-                                : limitarTexto(values[field.key]))
+                              ? limitarTexto(new Date(values[field.key]).toLocaleDateString("pt-BR"))
+                              : limitarTexto(values[field.key]))
                             : <span className="cadastro-placeholder">{field.label}</span>
                       }
                     </div>
