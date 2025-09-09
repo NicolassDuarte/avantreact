@@ -1,5 +1,14 @@
 const express = require("express");
+const cors = require("cors");
 const app = express();
+
+// Configuração do CORS
+app.use(cors({
+  origin: "http://localhost:5173", // porta do Vite
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  allowedHeaders: ["Content-Type", "Authorization"]
+}));
+
 app.use(express.json());
 
 // Importando rotas

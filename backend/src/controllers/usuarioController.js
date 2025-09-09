@@ -35,13 +35,13 @@ const addUsuarioHandler = async (req, res) => {
     const novousuario = await addUsuario(nome, email, senha);
     return res.status(201).json(novousuario);
   } catch (error) {
+    console.error("Erro ao criar usuário:", error); // log completo
     if (error.code === "P2002") {
-      return res
-        .status(400)
-        .json({ error: "Usuário já existe com este email" });
+      return res.status(400).json({ error: "Usuário já existe com este email" });
     }
-    return res.status(500).json({ error: "Erro ao criar usuário" });
+    return res.status(500).json({ error: error.message || "Erro ao criar usuário" });
   }
+
 };
 
 const uppdateUsuarioHandler = async (req, res) => {

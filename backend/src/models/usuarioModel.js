@@ -1,5 +1,8 @@
-const { PrismaClient } = require("../../generated/prisma");
-const prisma = new PrismaClient()
+// const { PrismaClient } = require("../../generated/prisma");
+// const { PrismaClient } = require("@prisma/client");
+const prisma = require("../prisma"); // usa a instância única
+
+// const prisma = new PrismaClient()
 
 const getAllUsuarios = async () => {
   return prisma.usuario.findMany({
@@ -11,11 +14,11 @@ const getAllUsuarios = async () => {
 
 const getUsuarioById = async (id_usuario) => {
   return prisma.usuario.findUnique({
-    where: {id_usuario}
+    where: { id_usuario }
   });
 };
 
-const addUsuario = async (nome, email,senha) => {
+const addUsuario = async (nome, email, senha) => {
   return prisma.usuario.create({
     data: {
       nome: nome,
@@ -25,7 +28,7 @@ const addUsuario = async (nome, email,senha) => {
   });
 };
 
-const updateUsuario = async (id_usuario, nome, email,senha) => {
+const updateUsuario = async (id_usuario, nome, email, senha) => {
   const usuario = await getUsuarioById(id_usuario);
 
   if (!usuario) {
@@ -33,7 +36,7 @@ const updateUsuario = async (id_usuario, nome, email,senha) => {
   }
 
   return prisma.usuario.update({
-    where: {id_usuario},
+    where: { id_usuario },
     data: {
       nome: nome,
       email: email,
