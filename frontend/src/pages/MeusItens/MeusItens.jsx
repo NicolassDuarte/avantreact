@@ -58,7 +58,10 @@ const MeusItens = () => {
                             {itens.map(item => (
                                 <div key={item.id_item} className="item-card">
                                     <div className="item-image">
-                                        <img src={item.imagemUrl || '/placeholder-item.png'} alt={item.titulo} />
+                                        <img
+                                            src={item.imagemUrl ? `http://localhost:3001${item.imagemUrl}` : '/placeholder-item.png'}
+                                            alt={item.titulo}
+                                        />
                                     </div>
                                     <div className="item-info">
                                         <h5>{item.titulo}</h5>

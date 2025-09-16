@@ -3,6 +3,10 @@ const prisma = new PrismaClient();
 
 const getAllItens = async () => {
   return prisma.item.findMany({
+    include: {
+      dono: true,       // inclui o usuário que é dono
+      categoria: true,  // inclui a categoria
+    },
     orderBy: {
       criadoEm: "desc",
     },
