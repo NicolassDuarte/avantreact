@@ -1,13 +1,12 @@
-
 .profile-section {
     display: flex;
-    flex-direction: column; 
-    min-height: 100vh; 
+    flex-direction: column;
+    min-height: 100vh;
 }
 
 
 .bg-page {
-    flex-grow: 1; 
+    flex-grow: 1;
     background-image: url('../assets/background-login.png');
     background-size: cover;
     background-position: center;
@@ -38,7 +37,7 @@
 }
 
 .profile-itens li {
-    padding: 8px 0; 
+    padding: 8px 0;
     font-size: 1.125rem;
 }
 

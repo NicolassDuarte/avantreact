@@ -1,0 +1,111 @@
+.meus-itens-container {
+    min-height: 100vh;
+    background-color: #f5f5f5;
+}
+
+.main-content-itens {
+    padding: 2rem;
+    min-height: calc(100vh - 70px);
+    background-image: url('../../assets/background-login.png');
+    background-size: cover;
+}
+
+.card-itens {
+    background: white;
+    padding: 2rem;
+    border-radius: 16px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.itens-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+.item-card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: transform 0.2s;
+}
+
+.item-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.item-image {
+    height: 200px;
+    overflow: hidden;
+}
+
+.item-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.item-info {
+    padding: 1rem;
+}
+
+.item-info h5 {
+    margin-bottom: 0.5rem;
+    color: #333;
+}
+
+.item-info p {
+    color: #666;
+    margin-bottom: 1rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.item-status {
+    margin-bottom: 1rem;
+}
+
+.status-badge {
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: bold;
+}
+
+.status-disponivel {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+}
+
+.status-negociando {
+    background-color: #fff3e0;
+    color: #ef6c00;
+}
+
+.status-indisponivel {
+    background-color: #ffebee;
+    color: #c62828;
+}
+
+.item-actions {
+    padding: 0 1rem 1rem;
+    display: flex;
+    gap: 0.5rem;
+}
+
+@media (max-width: 768px) {
+    .itens-list {
+        grid-template-columns: 1fr;
+    }
+
+    .main-content-itens {
+        padding: 1rem;
+    }
+
+    .card-itens {
+        padding: 1.5rem;
+    }
+}

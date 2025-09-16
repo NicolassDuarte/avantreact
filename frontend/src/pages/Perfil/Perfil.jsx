@@ -10,6 +10,7 @@ import { RiLockPasswordFill } from "react-icons/ri";
 import { BiSolidHelpCircle } from "react-icons/bi";
 import { IoExitOutline } from "react-icons/io5";
 import { CgProfile } from "react-icons/cg";
+import { useAuth } from "../../contexts/AuthContext";
 
 // Bootstrap
 import { Modal, Button } from "react-bootstrap";
@@ -17,6 +18,7 @@ import { Modal, Button } from "react-bootstrap";
 const Perfil = () => {
     const [showModal, setShowModal] = useState(false);
     const navigate = useNavigate();
+    const { logout } = useAuth();
 
     const handleLogoutClick = () => {
         setShowModal(true);
@@ -24,7 +26,8 @@ const Perfil = () => {
 
     const handleConfirmLogout = () => {
         setShowModal(false);
-        navigate("/"); // Redireciona para a página inicial
+        logout();
+        navigate("/");
     };
 
     const handleClose = () => {
@@ -38,13 +41,16 @@ const Perfil = () => {
                 <div className="cardProfile">
                     <CgProfile className="cgprofile" />
                     <ul className="profile-itens">
-                        <li><RiContactsFill /> Dados pessoais</li>
-                        {/* <li><FaHandshakeAngle /> Minhas trocas</li> */}
+                        <li onClick={() => navigate("/dados-pessoais")} style={{ cursor: "pointer" }}>
+                            <RiContactsFill /> Dados pessoais
+                        </li>
                         <li onClick={() => navigate("/minhas-trocas")} style={{ cursor: "pointer" }}>
                             <FaHandshakeAngle /> Minhas trocas
                         </li>
                         <li><FaHeart /> Lista de desejos</li>
-                        <li><IoLogoDropbox /> Meus Itens</li>
+                        <li onClick={() => navigate("/meus-itens")} style={{ cursor: "pointer" }}>
+                            <IoLogoDropbox /> Meus Itens
+                        </li>
                         <li><RiLockPasswordFill /> Alterar senha</li>
                         <li><BiSolidHelpCircle /> Ajuda</li>
                         <li onClick={handleLogoutClick} style={{ cursor: "pointer" }}>
@@ -54,7 +60,6 @@ const Perfil = () => {
                 </div>
             </div>
 
-            {/* Modal de confirmação */}
             <Modal show={showModal} onHide={handleClose} centered>
                 <Modal.Header closeButton>
                     <Modal.Title>Confirmar saída</Modal.Title>

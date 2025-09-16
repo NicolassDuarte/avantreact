@@ -1,6 +1,7 @@
 // const { PrismaClient } = require("../../generated/prisma");
 // const { PrismaClient } = require("@prisma/client");
 const prisma = require("../prisma"); // usa a instância única
+const bcrypt = require("bcryptjs");
 
 // const prisma = new PrismaClient()
 
@@ -18,12 +19,20 @@ const getUsuarioById = async (id_usuario) => {
   });
 };
 
+const getUsuarioByEmail = async (email) => {
+  return prisma.usuario.findUnique({
+    where: { email }
+  });
+};
+
 const addUsuario = async (nome, email, senha) => {
+  const hashedPassword = await bcrypt.hash(senha, 10);
+
   return prisma.usuario.create({
     data: {
       nome: nome,
       email: email,
-      senha: senha,
+      senha: hashedPassword,
     },
   });
 };
@@ -35,12 +44,17 @@ const updateUsuario = async (id_usuario, nome, email, senha) => {
     throw new Error("Usuário não encontrado");
   }
 
+  let hashedPassword = usuario.senha;
+  if (senha) {
+    hashedPassword = await bcrypt.hash(senha, 10);
+  }
+
   return prisma.usuario.update({
     where: { id_usuario },
     data: {
       nome: nome,
       email: email,
-      senha: senha,
+      senha: hashedPassword,
     },
   });
 };
@@ -62,6 +76,7 @@ const deleteUsuario = async (id_usuario) => {
 module.exports = {
   getAllUsuarios,
   getUsuarioById,
+  getUsuarioByEmail,
   addUsuario,
   updateUsuario,
   deleteUsuario
