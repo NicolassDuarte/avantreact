@@ -44,7 +44,7 @@ const addUsuarioHandler = async (req, res) => {
 
 };
 
-const uppdateUsuarioHandler = async (req, res) => {
+const updateUsuarioHandler = async (req, res) => {
   const id_usuario = Number.parseInt(req.params.id_usuario);
   const { nome, email, senha } = req.body;
   try {
@@ -77,10 +77,30 @@ const deleteUsuarioHandler = async (req, res) => {
   }
 };
 
+// Novo handler para obter perfil do usuário logado
+const getUsuarioProfileHandler = async (req, res) => {
+  try {
+    const user_id = req.user.user_id; // Obtido do token JWT
+    const usuario = await getUsuarioById(user_id);
+
+    if (!usuario) {
+      return res.status(404).json({ error: "Usuário não encontrado" });
+    }
+
+    // Não retornar a senha
+    const { senha, ...usuarioSemSenha } = usuario;
+    res.json(usuarioSemSenha);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+// Adicione esta exportação
 module.exports = {
   getAllUsuariosHandler,
   getUsuarioByIdHandler,
+  getUsuarioProfileHandler, // Nova exportação
   addUsuarioHandler,
-  uppdateUsuarioHandler,
-  deleteUsuarioHandler,
+  updateUsuarioHandler,
+  deleteUsuarioHandler
 };

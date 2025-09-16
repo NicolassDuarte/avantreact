@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const app = express();
+const authRoutes = require('./routes/authRoutes');
 
 // Configuração do CORS
 app.use(cors({
@@ -22,6 +23,7 @@ app.use("/api/usuarios", usuarioRoutes);
 app.use("/api/trocas", trocasRoutes);
 app.use("/api/itens", itensRoutes);
 app.use("/api/categorias", categoriasRoutes);
+app.use("/api/auth", authRoutes);
 
 // Rota raiz
 app.get("/", (req, res) => {

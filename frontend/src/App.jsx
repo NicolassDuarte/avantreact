@@ -1,44 +1,85 @@
-import { Router } from 'react-router-dom'
-import './App.css'
-import { BrowserRouter, Routes, Route } from "react-router-dom"
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"
+import { AuthProvider, useAuth } from './contexts/AuthContext';
 import Login from "./pages/Login/Login"
 import Cadastro from "./pages/Cadastro/Cadastro"
 import Perfil from "./pages/Perfil/Perfil"
-import Anuncios from "./pages/Anuncios"
 import Home from "./pages/Home/Home"
 import Populares from './pages/Populares'
 import CadastroProduto from "./pages/CadastroProduto/CadastroProduto"
 import Item from "./pages/Item/Item"
 import Produtos from "./pages/Produtos/Produtos";
 import MinhasTrocas from "./pages/MinhasTrocas/MinhasTrocas";
+import DadosPessoais from "./pages/DadosPessoais/DadosPessoais";
+import EditarDados from "./pages/EditarDados/EditarDados";
+import MeusItens from "./pages/MeusItens/MeusItens";
 import 'bootstrap/dist/css/bootstrap.min.css'
 
+// Componente para rotas protegidas
+const ProtectedRoute = ({ children }) => {
+  const { user } = useAuth();
+  return user ? children : <Navigate to="/login" replace />;
+};
+
+// Componente para rotas públicas (apenas para não autenticados)
+const PublicRoute = ({ children }) => {
+  const { user } = useAuth();
+  return !user ? children : <Navigate to="/" replace />;
+};
 
 function App() {
   return (
+    <AuthProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={
+            <PublicRoute>
+              <Login />
+            </PublicRoute>
+          } />
+          <Route path="/cadastro" element={
+            <PublicRoute>
+              <Cadastro />
+            </PublicRoute>
+          } />
+          <Route path="/perfil" element={
+            <ProtectedRoute>
+              <Perfil />
+            </ProtectedRoute>
+          } />
+          <Route path="/populares" element={<Populares />} />
+          <Route path="/cadastro-produto" element={
+            <ProtectedRoute>
+              <CadastroProduto />
+            </ProtectedRoute>
+          } />
+          <Route path="/item" element={<Item />} />
+          <Route path="/item/:id" element={<Item />} />
+          <Route path="/produtos" element={<Produtos />} />
+          <Route path="/minhas-trocas" element={
+            <ProtectedRoute>
+              <MinhasTrocas />
+            </ProtectedRoute>
+          } />
+          <Route path="/dados-pessoais" element={
+            <ProtectedRoute>
+              <DadosPessoais />
+            </ProtectedRoute>
+          } />
+          <Route path="/editar-dados" element={
+            <ProtectedRoute>
+              <EditarDados />
+            </ProtectedRoute>
+          } />
+          <Route path="/meus-itens" element={
+            <ProtectedRoute>
+              <MeusItens />
+            </ProtectedRoute>
+          } />
 
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/cadastro" element={<Cadastro />} />
-        <Route path="/perfil" element={<Perfil />} />
-        {/* <Route path="/anuncios" element={<Anuncios />} /> */}
-        <Route path="/populares" element={<Populares />} />
-        <Route path="/cadastro-produto" element={<CadastroProduto />} />
-        <Route path="/item" element={<Item />} />
-        <Route path="/item/:id" element={<Item />} />
-        <Route path="/produtos" element={<Produtos />} />
-        <Route path="/minhas-trocas" element={<MinhasTrocas />} />
-      </Routes>
-    </BrowserRouter>
-    // {/* <Sessionnav/>
-    // <section className='card-troca'></section>
-    // <section className='card-sobre'></section>
-    // <section className='card-rotation'></section>
-    // <section className='card-comentarios'></section>
-    // <Footer/> */}
-
+        </Routes>
+      </BrowserRouter>
+    </AuthProvider>
   )
 }
 

@@ -6,7 +6,8 @@ import loginIcon from "../../assets/user-login.png";
 import passwordIcon from "../../assets/password-login.png";
 import telephoneIcon from "../../assets/telephone.png";
 import emailIcon from "../../assets/email.png";
-import api from "../../services/api"; // importa axios
+import api from "../../services/api";
+import Swal from "sweetalert2";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 const Cadastro = () => {
@@ -17,6 +18,7 @@ const Cadastro = () => {
         confirmarSenha: "",
         telefone: ""
     });
+    const [loading, setLoading] = useState(false);
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -24,23 +26,74 @@ const Cadastro = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setLoading(true);
+
+        // Validações
+        if (!formData.nome || !formData.email || !formData.senha || !formData.confirmarSenha) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Campos obrigatórios',
+                text: 'Por favor, preencha todos os campos obrigatórios!',
+            });
+            setLoading(false);
+            return;
+        }
 
         if (formData.senha !== formData.confirmarSenha) {
-            alert("As senhas não coincidem!");
+            Swal.fire({
+                icon: 'error',
+                title: 'Senhas não coincidem',
+                text: 'As senhas digitadas não são iguais!',
+            });
+            setLoading(false);
+            return;
+        }
+
+        if (formData.senha.length < 6) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Senha muito curta',
+                text: 'A senha deve ter pelo menos 6 caracteres!',
+            });
+            setLoading(false);
             return;
         }
 
         try {
-            const response = await api.post("/usuarios", {
+            const response = await api.post("/auth/register", {
                 nome: formData.nome,
                 email: formData.email,
                 senha: formData.senha,
             });
-            alert("Usuário cadastrado com sucesso!");
-            console.log(response.data);
+
+            Swal.fire({
+                icon: 'success',
+                title: 'Cadastro realizado!',
+                text: 'Usuário cadastrado com sucesso!',
+                showConfirmButton: false,
+                timer: 2000
+            }).then(() => {
+                // Redirecionar para login após sucesso
+                window.location.href = '/login';
+            });
+
         } catch (error) {
             console.error(error);
-            alert(error.response?.data?.error || "Erro ao cadastrar usuário");
+
+            let errorMessage = "Erro ao cadastrar usuário";
+            if (error.response?.data?.error) {
+                errorMessage = error.response.data.error;
+            } else if (error.code === "ERR_NETWORK") {
+                errorMessage = "Erro de conexão. Verifique se o servidor está rodando.";
+            }
+
+            Swal.fire({
+                icon: 'error',
+                title: 'Erro no cadastro',
+                text: errorMessage,
+            });
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -63,7 +116,8 @@ const Cadastro = () => {
                                 value={formData.nome}
                                 onChange={handleChange}
                                 className="classColor form-control"
-                                placeholder="Nome completo"
+                                placeholder="Nome completo *"
+                                required
                             />
                         </div>
                     </div>
@@ -80,7 +134,8 @@ const Cadastro = () => {
                                 value={formData.email}
                                 onChange={handleChange}
                                 className="classColor form-control"
-                                placeholder="E-mail"
+                                placeholder="E-mail *"
+                                required
                             />
                         </div>
                     </div>
@@ -114,7 +169,9 @@ const Cadastro = () => {
                                 value={formData.senha}
                                 onChange={handleChange}
                                 className="classColor form-control"
-                                placeholder="Senha"
+                                placeholder="Senha *"
+                                required
+                                minLength={6}
                             />
                         </div>
                     </div>
@@ -131,15 +188,21 @@ const Cadastro = () => {
                                 value={formData.confirmarSenha}
                                 onChange={handleChange}
                                 className="classColor form-control"
-                                placeholder="Confirmar senha"
+                                placeholder="Confirmar senha *"
+                                required
+                                minLength={6}
                             />
                         </div>
                     </div>
 
                     {/* Botão Criar Conta */}
                     <div className="d-grid">
-                        <button type="submit" className="btn-entrar btn btn-success">
-                            Cadastrar
+                        <button
+                            type="submit"
+                            className="btn-entrar btn btn-success"
+                            disabled={loading}
+                        >
+                            {loading ? 'Cadastrando...' : 'Cadastrar'}
                         </button>
                     </div>
                 </form>

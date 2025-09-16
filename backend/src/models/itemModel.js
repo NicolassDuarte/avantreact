@@ -9,10 +9,10 @@ const getAllItens = async () => {
   });
 };
 
-const getItensByUsuario = async (id_aluno) => {
+const getItensByUsuario = async (donoId) => {
   return await prisma.item.findMany({
     where: {
-      id_aluno: id_aluno,
+      donoId: Number(donoId),
     },
     orderBy: {
       criadoEm: "desc",

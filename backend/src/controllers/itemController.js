@@ -4,6 +4,7 @@ const {
   addItem,
   updateItem,
   deleteItem,
+  getItensByUsuario,
 } = require("../models/itemModel");
 
 const getAllItensHandler = async (req, res) => {
@@ -97,10 +98,64 @@ const deleteItemHandler = async (req, res) => {
   }
 };
 
+const getItensByUsuarioHandler = async (req, res) => {
+  try {
+    const { userId } = req.query; // vai vir da URL ?userId=123
+    if (!userId) {
+      return res.status(400).json({ error: "ID do usuário não informado." });
+    }
+
+    const itens = await getItensByUsuario(Number(userId));
+    return res.status(200).json(itens);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ error: "Erro ao buscar itens do usuário." });
+  }
+};
+
+const addItemHandler = async (req, res) => {
+  const {
+    titulo,
+    descricao,
+    cidade,
+    bairro,
+    endereco,
+    donoId,
+    categoriaId,
+  } = req.body;
+
+  try {
+    // Se o usuário enviou imagem, o Multer vai colocar em req.file
+    let imagemUrl = null;
+    if (req.file) {
+      imagemUrl = `/uploads/itens/${req.file.filename}`; // caminho relativo
+    }
+
+    const novoItem = await addItem(
+      titulo,
+      descricao,
+      cidade,
+      bairro,
+      endereco,
+      imagemUrl,
+      donoId,
+      categoriaId
+    );
+
+    return res.status(201).json(novoItem);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ error: "Erro ao adicionar item." });
+  }
+};
+
+
 module.exports = {
   getAllItensHandler,
   getItemByIdHandler,
   addItemHandler,
   updateItemHandler,
   deleteItemHandler,
+  getItensByUsuarioHandler,
+  addItemHandler
 };

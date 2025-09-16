@@ -26,7 +26,6 @@
     font-size: 20px;
     font-weight: 500;
     color: #866C6C;
-    /* tom parecido com a imagem */
 }
 
 /* Links */
@@ -66,6 +65,25 @@
     border: 1px solid #2e7d32;
 }
 
+/* Botão logout */
+.btn-logout {
+    background-color: transparent;
+    color: #d32f2f;
+    border: 1px solid #d32f2f;
+    font-family: 'Poppins', sans-serif;
+    padding: 8px 20px;
+    border-radius: 20px;
+    text-decoration: none;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.btn-logout:hover {
+    background-color: #d32f2f;
+    color: white;
+}
+
 /* Perfil */
 .img-perfil {
     height: 28px;
@@ -74,4 +92,20 @@
     border: 2px solid #2e7d32;
     object-fit: cover;
     cursor: pointer;
+    margin-right: 16px;
+}
+
+/* Mensagem de boas-vindas */
+.user-welcome {
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    color: #555;
+    margin-right: 16px;
+}
+
+/* Container de ações */
+.navbar-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
