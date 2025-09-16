@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const upload = require('../middlewares/upload');
+const upload = require('../middlewares/upload'); // caminho do arquivo acima
+const authMiddleware = require('../middlewares/authMiddleware'); // 
 const {
   getAllItensHandler,
   getItemByIdHandler,
@@ -10,11 +11,12 @@ const {
   getItensByUsuarioHandler
 } = require('../controllers/itemController');
 
+// Rotas
 router.get('/', getAllItensHandler);
 router.get('/meus-itens', getItensByUsuarioHandler);
 router.get('/:id_item', getItemByIdHandler);
 
-// Aqui usamos upload.single('imagem') para 1 arquivo (campo do form "imagem")
+// Aqui usamos o middleware do Multer
 router.post('/', upload.single('imagem'), addItemHandler);
 
 router.put('/:id_item', updateItemHandler);

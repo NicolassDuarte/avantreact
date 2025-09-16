@@ -102,35 +102,20 @@ const CadastroProduto = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    // Verificar se o usuário está logado
-    if (!user) {
-      Swal.fire({
-        icon: 'warning',
-        title: 'Atenção',
-        text: 'Você precisa estar logado para cadastrar um produto!',
-        confirmButtonText: 'Fazer Login'
-      }).then((result) => {
-        if (result.isConfirmed) {
-          navigate('/login');
-        }
-      });
-      return;
-    }
+    if (!user) return;
 
     try {
-      const payload = {
-        titulo: values.nome,
-        descricao: values.descricao,
-        cidade: values.localizacao.cidade,
-        bairro: values.localizacao.bairro,
-        endereco: `${values.localizacao.rua}, ${values.localizacao.numero}`,
-        imagemUrl: values.foto ? values.foto.name : null,
-        donoId: user.id_usuario, // Usar o ID do usuário logado
-        categoriaId: 1, // 🔜 depois vincular à tabela de categorias
-      };
+      const formData = new FormData();
+      formData.append('titulo', values.nome);
+      formData.append('descricao', values.descricao);
+      formData.append('cidade', values.localizacao.cidade);
+      formData.append('bairro', values.localizacao.bairro);
+      formData.append('endereco', `${values.localizacao.rua}, ${values.localizacao.numero}`);
+      formData.append('donoId', user.id_usuario);
+      formData.append('categoriaId', 1);
+      if (values.foto) formData.append('imagem', values.foto); // ✅ envia o arquivo real
 
-      await criarItem(payload);
+      await criarItem(formData, { headers: { 'Content-Type': 'multipart/form-data' } });
 
       Swal.fire({
         icon: 'success',
@@ -150,13 +135,10 @@ const CadastroProduto = () => {
       });
     } catch (err) {
       console.error(err);
-      Swal.fire({
-        icon: 'error',
-        title: 'Erro!',
-        text: 'Não foi possível cadastrar o produto.',
-      });
+      Swal.fire({ icon: 'error', title: 'Erro!', text: 'Não foi possível cadastrar o produto.' });
     }
   };
+
 
   return (
     <div className="cadastro-bg">

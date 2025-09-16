@@ -30,34 +30,34 @@ const getItemByIdHandler = async (req, res) => {
   }
 };
 
-const addItemHandler = async (req, res) => {
-  const {
-    titulo,
-    descricao,
-    cidade,
-    bairro,
-    endereco,
-    imagemUrl,
-    donoId,
-    categoriaId,
-  } = req.body;
-  try {
-    const novoItem = await addItem(
-      titulo,
-      descricao,
-      cidade,
-      bairro,
-      endereco,
-      imagemUrl,
-      donoId,
-      categoriaId
-    );
-    return res.status(201).json(novoItem);
-  } catch (error) {
-    console.error(error);
-    return res.status(500).json({ error: "Erro ao adicionar item." });
-  }
-};
+// const addItemHandler = async (req, res) => {
+//   const {
+//     titulo,
+//     descricao,
+//     cidade,
+//     bairro,
+//     endereco,
+//     imagemUrl,
+//     donoId,
+//     categoriaId,
+//   } = req.body;
+//   try {
+//     const novoItem = await addItem(
+//       titulo,
+//       descricao,
+//       cidade,
+//       bairro,
+//       endereco,
+//       imagemUrl,
+//       donoId,
+//       categoriaId
+//     );
+//     return res.status(201).json(novoItem);
+//   } catch (error) {
+//     console.error(error);
+//     return res.status(500).json({ error: "Erro ao adicionar item." });
+//   }
+// };
 
 const updateItemHandler = async (req, res) => {
   const id_item = Number(req.params.id_item);
@@ -114,23 +114,12 @@ const getItensByUsuarioHandler = async (req, res) => {
 };
 
 const addItemHandler = async (req, res) => {
-  const {
-    titulo,
-    descricao,
-    cidade,
-    bairro,
-    endereco,
-    donoId,
-    categoriaId,
-  } = req.body;
+  const { titulo, descricao, cidade, bairro, endereco, donoId, categoriaId } = req.body;
+
+  // req.file é criado pelo Multer
+  const imagemUrl = req.file ? `/uploads/${req.file.filename}` : '';
 
   try {
-    // Se o usuário enviou imagem, o Multer vai colocar em req.file
-    let imagemUrl = null;
-    if (req.file) {
-      imagemUrl = `/uploads/itens/${req.file.filename}`; // caminho relativo
-    }
-
     const novoItem = await addItem(
       titulo,
       descricao,
@@ -138,17 +127,15 @@ const addItemHandler = async (req, res) => {
       bairro,
       endereco,
       imagemUrl,
-      donoId,
-      categoriaId
+      Number(donoId),        // <-- converte para número
+      Number(categoriaId)    // <-- converte para número
     );
-
     return res.status(201).json(novoItem);
   } catch (error) {
     console.error(error);
     return res.status(500).json({ error: "Erro ao adicionar item." });
   }
 };
-
 
 module.exports = {
   getAllItensHandler,
@@ -157,5 +144,4 @@ module.exports = {
   updateItemHandler,
   deleteItemHandler,
   getItensByUsuarioHandler,
-  addItemHandler
 };

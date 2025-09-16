@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const app = express();
 const authRoutes = require('./routes/authRoutes');
+const path = require('path');
 
 // Configuração do CORS
 app.use(cors({
@@ -24,6 +25,7 @@ app.use("/api/trocas", trocasRoutes);
 app.use("/api/itens", itensRoutes);
 app.use("/api/categorias", categoriasRoutes);
 app.use("/api/auth", authRoutes);
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Rota raiz
 app.get("/", (req, res) => {
