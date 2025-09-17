@@ -1,6 +1,16 @@
 .item-page {
     min-height: 100vh;
     background: #f5f5f5;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Garantir que a NavBar fique no topo */
+.item-page>header.navbar {
+    position: sticky;
+    top: 0;
+    z-index: 1030;
+    width: 100%;
 }
 
 /* Miniaturas (desktop) */
@@ -12,7 +22,6 @@
     .thumbnails-desktop {
         display: flex;
         flex-direction: column;
-        align-items: end;
         margin-right: 1rem;
         gap: 20px;
     }
@@ -141,4 +150,11 @@
 .item-button {
     font-size: 1.2rem;
     padding: 1rem;
+}
+
+/* Ajustes para garantir que o conteúdo não sobreponha a NavBar */
+.container.py-5 {
+    padding-top: 2rem !important;
+    padding-bottom: 2rem !important;
+    flex: 1;
 }

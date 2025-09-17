@@ -12,6 +12,7 @@ import MinhasTrocas from "./pages/MinhasTrocas/MinhasTrocas";
 import DadosPessoais from "./pages/DadosPessoais/DadosPessoais";
 import EditarDados from "./pages/EditarDados/EditarDados";
 import MeusItens from "./pages/MeusItens/MeusItens";
+import EditarItem from './pages/EditarItem/EditarItem';
 import 'bootstrap/dist/css/bootstrap.min.css'
 
 // Componente para rotas protegidas
@@ -74,6 +75,12 @@ function App() {
           <Route path="/meus-itens" element={
             <ProtectedRoute>
               <MeusItens />
+            </ProtectedRoute>
+          } />
+
+          <Route path="/editar-item/:id" element={
+            <ProtectedRoute>
+              <EditarItem />
             </ProtectedRoute>
           } />
 

@@ -29,6 +29,10 @@ const getItemById = async (id_item) => {
     where: {
       id_item: Number(id_item),
     },
+    include: {
+      dono: true,       // pega os dados do usuário dono
+      categoria: true,  // pega os dados da categoria
+    },
   });
 };
 

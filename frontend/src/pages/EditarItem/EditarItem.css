@@ -1,0 +1,42 @@
+.editar-item-container {
+    min-height: 100vh;
+    background-color: #f5f5f5;
+    padding-bottom: 2rem;
+}
+
+.editar-item-form-container {
+    max-width: 600px;
+    margin: 2rem auto;
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.editar-item-form-container h2 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.editar-item-form-container label {
+    display: block;
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+}
+
+.editar-item-form-container input,
+.editar-item-form-container textarea,
+.editar-item-form-container select {
+    width: 100%;
+    padding: 0.5rem;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+}
+
+.editar-item-form-container button {
+    margin-top: 1.5rem;
+    width: 100%;
+    padding: 0.75rem;
+    font-size: 1rem;
+}

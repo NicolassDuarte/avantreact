@@ -112,7 +112,17 @@ const CadastroProduto = () => {
       formData.append('bairro', values.localizacao.bairro);
       formData.append('endereco', `${values.localizacao.rua}, ${values.localizacao.numero}`);
       formData.append('donoId', user.id_usuario);
-      formData.append('categoriaId', 1); // pode ajustar depois para categoria real
+
+      const categoriaMap = {
+        "Eletrônico": 1,
+        "Roupas": 2,
+        "Móveis": 3,
+        "Brinquedos": 4,
+        "Livros": 5,
+        "Outro": 6
+      };
+      formData.append('categoriaId', categoriaMap[values.tipo] || 6);
+
       if (values.foto) formData.append('imagem', values.foto);
 
       await criarItem(formData, { headers: { 'Content-Type': 'multipart/form-data' } });
@@ -125,7 +135,6 @@ const CadastroProduto = () => {
         showConfirmButton: false
       });
 
-      // Limpa o formulário
       setValues({
         nome: "",
         tipo: "",
@@ -135,7 +144,6 @@ const CadastroProduto = () => {
         foto: null,
       });
 
-      // 🔹 Redireciona para Meus Itens
       navigate('/meus-itens');
 
     } catch (err) {
@@ -143,6 +151,7 @@ const CadastroProduto = () => {
       Swal.fire({ icon: 'error', title: 'Erro!', text: 'Não foi possível cadastrar o produto.' });
     }
   };
+
 
   return (
     <div className="cadastro-bg">

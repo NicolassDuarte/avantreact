@@ -1,0 +1,64 @@
+.troca-info {
+    margin-bottom: 1rem;
+}
+
+.desejado-card {
+    display: flex;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 1rem;
+    margin-top: 0.5rem;
+}
+
+.desejado-card img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-right: 1rem;
+}
+
+.desejado-card h6 {
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+.itens-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.item-card {
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    padding: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.item-card:hover {
+    border-color: #4caf50;
+    transform: translateY(-2px);
+}
+
+.item-card.selected {
+    border-color: #4caf50;
+    background-color: #e8f5e9;
+}
+
+.item-card img {
+    width: 100%;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 4px;
+    margin-bottom: 0.5rem;
+}
+
+.item-card h6 {
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
