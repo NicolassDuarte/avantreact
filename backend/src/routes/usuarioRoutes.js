@@ -7,7 +7,8 @@ const {
     getUsuarioByIdHandler,
     getUsuarioProfileHandler, // Novo handler para perfil do usuário logado
     updateUsuarioHandler,
-    deleteUsuarioHandler
+    deleteUsuarioHandler,
+    updateUsuarioSenhaHandler
 } = require('../controllers/usuarioController');
 
 // Rota pública - listar usuários (se necessário)
@@ -20,5 +21,6 @@ router.get('/profile', authMiddleware, getUsuarioProfileHandler);
 router.get('/:id_usuario', authMiddleware, getUsuarioByIdHandler);
 router.put('/:id_usuario', authMiddleware, updateUsuarioHandler);
 router.delete('/:id_usuario', authMiddleware, deleteUsuarioHandler);
+router.put('/:id_usuario/senha', authMiddleware, updateUsuarioSenhaHandler);
 
 module.exports = router;

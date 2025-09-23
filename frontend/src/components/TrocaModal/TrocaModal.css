@@ -37,12 +37,12 @@
     border-radius: 8px;
     padding: 1rem;
     cursor: pointer;
-    transition: all 0.3s ease;
+    /* transition: all 0.3s ease; */
 }
 
 .item-card:hover {
     border-color: #4caf50;
-    transform: translateY(-2px);
+    /* transform: translateY(-2px); */
 }
 
 .item-card.selected {

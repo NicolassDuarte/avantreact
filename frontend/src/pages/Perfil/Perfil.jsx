@@ -51,7 +51,9 @@ const Perfil = () => {
                         <li onClick={() => navigate("/meus-itens")} style={{ cursor: "pointer" }}>
                             <IoLogoDropbox /> Meus Itens
                         </li>
-                        <li><RiLockPasswordFill /> Alterar senha</li>
+                        <li onClick={() => navigate("/alterar-senha")} style={{ cursor: "pointer" }}>
+                            <RiLockPasswordFill /> Alterar senha
+                        </li>
                         <li><BiSolidHelpCircle /> Ajuda</li>
                         <li onClick={handleLogoutClick} style={{ cursor: "pointer" }}>
                             <IoExitOutline /> Sair

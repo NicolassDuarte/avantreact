@@ -1,19 +1,20 @@
 /* Container principal */
 .navbar {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
-    padding: 12px 40px;
+    padding: 12px 20px;
     background-color: white;
     border-bottom: 1px solid #eee;
-    z-index: 10;
+    z-index: 1000;
+    position: relative;
 }
 
 /* Logo */
 .navbar-logo {
     display: flex;
     align-items: center;
-    gap: 8px;
+    z-index: 1001;
 }
 
 .img-logo {
@@ -21,17 +22,11 @@
     width: auto;
 }
 
-.logo-text {
-    font-family: 'Poppins', sans-serif;
-    font-size: 20px;
-    font-weight: 500;
-    color: #866C6C;
-}
-
-/* Links */
+/* Links - Desktop */
 .navbar-links {
     display: flex;
     gap: 32px;
+    align-items: center;
 }
 
 .navbar-links a {
@@ -46,7 +41,7 @@
     color: #008000;
 }
 
-/* Botão login */
+/* Botão login - Desktop */
 .btn-login {
     background-color: #2e7d32;
     color: white;
@@ -56,7 +51,6 @@
     text-decoration: none;
     font-size: 14px;
     transition: all 0.3s ease;
-    margin-right: 16px;
 }
 
 .btn-login:hover {
@@ -65,7 +59,7 @@
     border: 1px solid #2e7d32;
 }
 
-/* Botão logout */
+/* Botão logout - Desktop */
 .btn-logout {
     background-color: transparent;
     color: #d32f2f;
@@ -84,7 +78,7 @@
     color: white;
 }
 
-/* Perfil */
+/* Perfil - Desktop */
 .img-perfil {
     height: 28px;
     width: 28px;
@@ -92,20 +86,145 @@
     border: 2px solid #2e7d32;
     object-fit: cover;
     cursor: pointer;
-    margin-right: 16px;
 }
 
-/* Mensagem de boas-vindas */
+/* Mensagem de boas-vindas - Desktop */
 .user-welcome {
     font-family: 'Poppins', sans-serif;
     font-size: 14px;
     color: #555;
-    margin-right: 16px;
 }
 
-/* Container de ações */
+/* Container de ações - Desktop */
 .navbar-actions {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 16px;
+}
+
+/* Menu toggle (hamburguer) - Mobile */
+.menu-toggle {
+    display: none;
+    font-size: 24px;
+    cursor: pointer;
+    z-index: 1001;
+}
+
+/* Mobile Auth - Escondido no desktop */
+.mobile-auth {
+    display: none;
+}
+
+/* ========== RESPONSIVIDADE ========== */
+@media (max-width: 768px) {
+
+    /* Esconder ações desktop */
+    .navbar-actions {
+        display: none;
+    }
+
+    /* Mostrar botão hamburguer */
+    .menu-toggle {
+        display: block;
+    }
+
+    /* Menu mobile */
+    .navbar-links {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 70%;
+        height: 100vh;
+        background: white;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+        padding: 80px 30px 30px;
+        gap: 25px;
+        transition: right 0.3s ease;
+        box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .navbar-links.active {
+        right: 0;
+    }
+
+    /* Mostrar auth mobile */
+    .mobile-auth {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        width: 100%;
+        margin-top: 20px;
+        padding-top: 20px;
+        border-top: 1px solid #eee;
+    }
+
+    .user-info-mobile {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 10px;
+    }
+
+    .img-perfil-mobile {
+        height: 40px;
+        width: 40px;
+        border-radius: 50%;
+        border: 2px solid #2e7d32;
+        object-fit: cover;
+    }
+
+    .user-welcome-mobile {
+        font-family: 'Poppins', sans-serif;
+        font-size: 16px;
+        color: #555;
+    }
+
+    .btn-login-mobile {
+        background-color: #2e7d32;
+        color: white;
+        font-family: 'Poppins', sans-serif;
+        padding: 12px 20px;
+        border-radius: 20px;
+        text-decoration: none;
+        text-align: center;
+        font-size: 16px;
+        transition: all 0.3s ease;
+    }
+
+    .btn-logout-mobile {
+        background-color: transparent;
+        color: #d32f2f;
+        border: 1px solid #d32f2f;
+        font-family: 'Poppins', sans-serif;
+        padding: 12px 20px;
+        border-radius: 20px;
+        text-decoration: none;
+        text-align: center;
+        font-size: 16px;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        width: 100%;
+    }
+
+    .btn-logout-mobile:hover {
+        background-color: #d32f2f;
+        color: white;
+    }
+}
+
+@media (max-width: 480px) {
+    .navbar {
+        padding: 10px 15px;
+    }
+
+    .img-logo {
+        height: 28px;
+    }
+
+    .navbar-links {
+        width: 85%;
+        padding: 70px 20px 20px;
+    }
 }

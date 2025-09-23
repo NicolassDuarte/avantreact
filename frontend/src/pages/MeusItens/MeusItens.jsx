@@ -94,10 +94,16 @@ const MeusItens = () => {
                             {itens.map(item => (
                                 <div key={item.id_item} className="item-card">
                                     <div className="item-image">
-                                        <img
-                                            src={item.imagemUrl ? `http://localhost:3001${item.imagemUrl}` : '/placeholder-item.png'}
-                                            alt={item.titulo}
-                                        />
+                                        {item.imagemUrl && item.imagemUrl.length > 0 ? (
+                                            <img
+                                                src={item.imagemUrl[0]} // pega a primeira imagem
+                                                alt={item.titulo}
+                                            />
+                                        ) : (
+                                            <div className="sem-imagem">
+                                                <p>Sem imagem</p>
+                                            </div>
+                                        )}
                                     </div>
                                     <div className="item-info">
                                         <h5>{item.titulo}</h5>

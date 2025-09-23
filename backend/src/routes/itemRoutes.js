@@ -8,7 +8,7 @@ const {
   addItemHandler,
   updateItemHandler,
   deleteItemHandler,
-  getItensByUsuarioHandler
+  getItensByUsuarioHandler,
 } = require('../controllers/itemController');
 
 // Rotas
@@ -17,7 +17,7 @@ router.get('/meus-itens', getItensByUsuarioHandler);
 router.get('/:id_item', getItemByIdHandler);
 
 // Aqui usamos o middleware do Multer
-router.post('/', upload.single('imagem'), addItemHandler);
+router.post('/', addItemHandler);
 
 router.put('/:id_item', updateItemHandler);
 router.delete('/:id_item', deleteItemHandler);

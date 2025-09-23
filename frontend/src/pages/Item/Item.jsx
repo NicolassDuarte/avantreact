@@ -3,19 +3,21 @@ import { useParams, useNavigate } from "react-router-dom";
 import NavBar from "../../components/NavBar/NavBar";
 import Footer from "../../components/Footer";
 import TrocaModal from "../../components/TrocaModal/TrocaModal";
+import { useAuth } from '../../contexts/AuthContext';
 import api from "../../services/api";
+import Swal from 'sweetalert2';
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./Item.css";
 
 const Item = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const { user } = useAuth(); // Adicionando useAuth aqui
   const [item, setItem] = useState(null);
   const [loading, setLoading] = useState(true);
   const [imgSelecionada, setImgSelecionada] = useState(0);
   const [showTrocaModal, setShowTrocaModal] = useState(false);
   const [userItens, setUserItens] = useState([]);
-  const [userId, setUserId] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -24,22 +26,13 @@ const Item = () => {
         const response = await api.get(`/itens/${id}`);
         setItem(response.data);
 
-        // Verificar se o usuário está logado
-        const token = localStorage.getItem('token');
-        if (token) {
+        // Se o usuário estiver logado, carregar seus itens
+        if (user) {
           try {
-            // Decodificar o token para obter informações do usuário
-            const payload = JSON.parse(atob(token.split('.')[1]));
-
-            // Ajuste para a estrutura do seu token
-            const userIdentifier = payload.id || payload.id_usuario || payload.userId;
-            setUserId(userIdentifier);
-
-            // Carregar itens do usuário
-            const userItensResponse = await api.get(`/itens/meus-itens?userId=${userIdentifier}`);
+            const userItensResponse = await api.get(`/itens/meus-itens?userId=${user.id_usuario}`);
             setUserItens(userItensResponse.data);
           } catch (error) {
-            console.error("Erro ao carregar informações do usuário:", error);
+            console.error("Erro ao carregar itens do usuário:", error);
           }
         }
       } catch (error) {
@@ -50,15 +43,34 @@ const Item = () => {
     };
 
     fetchData();
-  }, [id]);
+  }, [id, user]); // Adicionando user como dependência
 
   const handleTrocarClick = () => {
     const token = localStorage.getItem('token');
     if (!token) {
-      alert("Você precisa estar logado para propor uma troca!");
-      navigate('/login');
+      Swal.fire({
+        icon: 'warning',
+        title: 'Atenção',
+        text: 'Você precisa estar logado para propor uma troca!',
+        confirmButtonText: 'Fazer Login'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          navigate('/login');
+        }
+      });
       return;
     }
+
+    // Verificar se o usuário é o dono do item
+    if (user && user.id_usuario === item.donoId) {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Atenção',
+        text: 'Você não pode propor troca para seu próprio item!',
+      });
+      return;
+    }
+
     setShowTrocaModal(true);
   };
 
@@ -67,14 +79,32 @@ const Item = () => {
       await api.post('/trocas', {
         itemOferecidoId: itemOferecidoId,
         itemDesejadoId: item.id_item,
-        ofertanteId: userId,
+        ofertanteId: user.id_usuario,
         receptorId: item.donoId
       });
-      alert("Proposta de troca enviada com sucesso!");
-      setShowTrocaModal(false);
+
+      Swal.fire({
+        icon: 'success',
+        title: 'Sucesso!',
+        text: 'Proposta de troca enviada com sucesso!',
+        timer: 2000,
+        showConfirmButton: false
+      }).then(() => {
+        setShowTrocaModal(false);
+      });
     } catch (error) {
       console.error("Erro ao enviar proposta de troca:", error);
-      alert("Erro ao enviar proposta de troca. Tente novamente.");
+
+      let errorMessage = 'Erro ao enviar proposta de troca. Tente novamente.';
+      if (error.response?.data?.error) {
+        errorMessage = error.response.data.error;
+      }
+
+      Swal.fire({
+        icon: 'error',
+        title: 'Erro',
+        text: errorMessage,
+      });
     }
   };
 
@@ -100,9 +130,21 @@ const Item = () => {
     );
   }
 
-  const imagens = item.imagemUrl
-    ? [`http://localhost:3001${item.imagemUrl}`]
-    : ["/placeholder-item.png"];
+  // transforma cada entrada de imagem em um src válido
+  const toImgSrc = (u) => {
+    if (!u) return null;
+    if (u.startsWith('data:')) return u; // já é data URL (base64 completo)
+    if (u.startsWith('/uploads')) return `http://localhost:3001${u}`; // caminho do servidor
+    if (u.startsWith('http')) return u; // já é url completa
+    return `data:image/jpeg;base64,${u}`; // é só o base64 “seco”
+  };
+
+  const imagens = (Array.isArray(item.imagemUrl) ? item.imagemUrl : [])
+    .map(toImgSrc)
+    .filter(Boolean);
+
+  if (!imagens.length) imagens.push('/placeholder-item.png');
+
 
   return (
     <div className="item-page">

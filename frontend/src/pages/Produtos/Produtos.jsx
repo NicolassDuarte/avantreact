@@ -57,14 +57,16 @@ const Produtos = () => {
                         {itens.map((item) => (
                             <div key={item.id_item} className="card-produto">
                                 <div className="imagem-container">
-                                    <img
-                                        src={
-                                            item.imagemUrl
-                                                ? `http://localhost:3001${item.imagemUrl}`
-                                                : "/placeholder-item.png"
-                                        }
-                                        alt={item.titulo}
-                                    />
+                                    {item.imagemUrl && item.imagemUrl.length > 0 ? (
+                                        <img
+                                            src={item.imagemUrl[0]} // pega apenas a primeira imagem
+                                            alt={item.titulo}
+                                        />
+                                    ) : (
+                                        <div className="sem-imagem">
+                                            <p>Sem imagem</p>
+                                        </div>
+                                    )}
                                     <span className="categoria">{item.categoria?.nome || "Sem categoria"}</span>
                                 </div>
                                 <div className="info-produto">

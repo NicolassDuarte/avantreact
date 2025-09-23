@@ -13,6 +13,7 @@ import DadosPessoais from "./pages/DadosPessoais/DadosPessoais";
 import EditarDados from "./pages/EditarDados/EditarDados";
 import MeusItens from "./pages/MeusItens/MeusItens";
 import EditarItem from './pages/EditarItem/EditarItem';
+import AlterarSenha from "./pages/AlterarSenha/AlterarSenha";
 import 'bootstrap/dist/css/bootstrap.min.css'
 
 // Componente para rotas protegidas
@@ -81,6 +82,12 @@ function App() {
           <Route path="/editar-item/:id" element={
             <ProtectedRoute>
               <EditarItem />
+            </ProtectedRoute>
+          } />
+
+          <Route path="/alterar-senha" element={
+            <ProtectedRoute>
+              <AlterarSenha />
             </ProtectedRoute>
           } />
 

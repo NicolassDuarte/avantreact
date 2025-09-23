@@ -18,7 +18,7 @@ const tipoOptions = [
   "Móveis",
   "Brinquedos",
   "Livros",
-  "Outro"
+  "Outro",
 ];
 
 const fields = [
@@ -36,12 +36,15 @@ const CadastroProduto = () => {
     descricao: "",
     localizacao: { cep: "", rua: "", numero: "", bairro: "", cidade: "", estado: "" },
     data: "",
-    foto: null,
+    fotoNomes: "",         // nomes exibidos na UI
   });
+
+  const [imagensB64, setImagensB64] = useState([]); // array de base64 (["data:image/...;base64,AAAA", ...])
   const [popup, setPopup] = useState({ open: false, field: null, tempValue: "" });
   const [localizacaoTemp, setLocalizacaoTemp] = useState({ cep: "", rua: "", numero: "", bairro: "", cidade: "", estado: "" });
   const [loadingCep, setLoadingCep] = useState(false);
   const [cepError, setCepError] = useState("");
+
   const navigate = useNavigate();
   const { user } = useAuth();
 
@@ -66,9 +69,27 @@ const CadastroProduto = () => {
     closePopup();
   };
 
-  const handlePhoto = (e) => {
-    if (e.target.files && e.target.files[0]) {
-      setValues((v) => ({ ...v, foto: e.target.files[0] }));
+  // === Helpers ===
+  const fileToBase64 = (file) =>
+    new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result); // "data:image/png;base64,AAAA..."
+      reader.onerror = (err) => reject(err);
+      reader.readAsDataURL(file);
+    });
+
+  // múltiplas imagens → base64[]
+  const handlePhotos = async (e) => {
+    const files = Array.from(e.target.files || []);
+    if (!files.length) return;
+
+    try {
+      const list = await Promise.all(files.map(async (f) => await fileToBase64(f)));
+      setImagensB64(list);
+      setValues((v) => ({ ...v, fotoNomes: files.map((f) => f.name).join(", ") }));
+    } catch (err) {
+      console.error("Falha ao converter imagens:", err);
+      Swal.fire({ icon: "error", title: "Erro", text: "Não foi possível ler as imagens." });
     }
   };
 
@@ -105,50 +126,52 @@ const CadastroProduto = () => {
     if (!user) return;
 
     try {
-      const formData = new FormData();
-      formData.append('titulo', values.nome);
-      formData.append('descricao', values.descricao);
-      formData.append('cidade', values.localizacao.cidade);
-      formData.append('bairro', values.localizacao.bairro);
-      formData.append('endereco', `${values.localizacao.rua}, ${values.localizacao.numero}`);
-      formData.append('donoId', user.id_usuario);
-
       const categoriaMap = {
         "Eletrônico": 1,
         "Roupas": 2,
         "Móveis": 3,
         "Brinquedos": 4,
         "Livros": 5,
-        "Outro": 6
+        "Outro": 6,
       };
-      formData.append('categoriaId', categoriaMap[values.tipo] || 6);
 
-      if (values.foto) formData.append('imagem', values.foto);
+      // Envia JSON (sem FormData)
+      const payload = {
+        titulo: values.nome,
+        descricao: values.descricao,
+        cidade: values.localizacao.cidade,
+        bairro: values.localizacao.bairro,
+        endereco: `${values.localizacao.rua}, ${values.localizacao.numero}`,
+        donoId: user.id_usuario,
+        categoriaId: categoriaMap[values.tipo] || 6,
+        imagemUrl: imagensB64, // array de base64
+      };
 
-      await criarItem(formData, { headers: { 'Content-Type': 'multipart/form-data' } });
+      await criarItem(payload); // axios envia application/json por padrão
 
       Swal.fire({
-        icon: 'success',
-        title: 'Sucesso!',
-        text: 'Produto cadastrado com sucesso!',
+        icon: "success",
+        title: "Sucesso!",
+        text: "Produto cadastrado com sucesso!",
         timer: 2000,
-        showConfirmButton: false
+        showConfirmButton: false,
       });
 
+      // reset
       setValues({
         nome: "",
         tipo: "",
         descricao: "",
         localizacao: { cep: "", rua: "", numero: "", bairro: "", cidade: "", estado: "" },
         data: "",
-        foto: null,
+        fotoNomes: "",
       });
+      setImagensB64([]);
 
-      navigate('/meus-itens');
-
+      navigate("/meus-itens");
     } catch (err) {
       console.error(err);
-      Swal.fire({ icon: 'error', title: 'Erro!', text: 'Não foi possível cadastrar o produto.' });
+      Swal.fire({ icon: "error", title: "Erro!", text: "Não foi possível cadastrar o produto." });
     }
   };
 
@@ -178,16 +201,26 @@ const CadastroProduto = () => {
                     </div>
                   </div>
                 ))}
+
                 <div className="mb-4 d-flex align-items-center cadastro-foto" onClick={() => document.getElementById("input-foto").click()}>
                   <FaFileImage className="cadastro-foto-icon" />
                   <div className="cadastro-foto-value">
-                    <span className={values.foto ? "cadastro-foto-nome" : "cadastro-placeholder"}>
-                      {values.foto ? limitarTexto(values.foto.name) : "Adicionar foto"}
+                    <span className={values.fotoNomes ? "cadastro-foto-nome" : "cadastro-placeholder"}>
+                      {values.fotoNomes ? limitarTexto(values.fotoNomes) : "Adicionar fotos"}
                     </span>
                     <FiPlusCircle className="cadastro-foto-plus" />
-                    <input id="input-foto" type="file" accept="image/*" style={{ display: "none" }} onChange={handlePhoto} />
+                    {/* múltiplas imagens */}
+                    <input
+                      id="input-foto"
+                      type="file"
+                      accept="image/*"
+                      multiple
+                      style={{ display: "none" }}
+                      onChange={handlePhotos}
+                    />
                   </div>
                 </div>
+
                 <button type="submit" className="btn btn-success w-100 fw-bold cadastro-btn">Salvar</button>
               </form>
             </div>
@@ -198,41 +231,114 @@ const CadastroProduto = () => {
           <div className="cadastro-popup-bg">
             <div className="cadastro-popup">
               <h3 className="cadastro-popup-title">{popup.field.label}</h3>
+
               {popup.field.type === "select" && (
-                <select value={popup.tempValue} onChange={e => setPopup(p => ({ ...p, tempValue: e.target.value }))} className="cadastro-popup-input" autoFocus>
+                <select
+                  value={popup.tempValue}
+                  onChange={(e) => setPopup((p) => ({ ...p, tempValue: e.target.value }))}
+                  className="cadastro-popup-input"
+                  autoFocus
+                >
                   <option value="">Selecione...</option>
-                  {tipoOptions.map(opt => <option key={opt} value={opt}>{opt}</option>)}
+                  {tipoOptions.map((opt) => (
+                    <option key={opt} value={opt}>{opt}</option>
+                  ))}
                 </select>
               )}
+
               {popup.field.type === "localizacao" && (
                 <div>
                   <div className="d-flex gap-2 mb-2">
-                    <input type="text" placeholder="CEP" value={localizacaoTemp.cep} onChange={e => setLocalizacaoTemp(l => ({ ...l, cep: e.target.value }))} className="cadastro-popup-input flex-fill" maxLength={9} />
-                    <button type="button" onClick={handleBuscarCep} className="btn btn-success cadastro-popup-btn" disabled={loadingCep}>
+                    <input
+                      type="text"
+                      placeholder="CEP"
+                      value={localizacaoTemp.cep}
+                      onChange={(e) => setLocalizacaoTemp((l) => ({ ...l, cep: e.target.value }))}
+                      className="cadastro-popup-input flex-fill"
+                      maxLength={9}
+                    />
+                    <button
+                      type="button"
+                      onClick={handleBuscarCep}
+                      className="btn btn-success cadastro-popup-btn"
+                      disabled={loadingCep}
+                    >
                       {loadingCep ? "Buscando..." : "Buscar"}
                     </button>
                   </div>
                   {cepError && <div className="cadastro-popup-error mb-2">{cepError}</div>}
-                  <input type="text" placeholder="Logradouro" value={localizacaoTemp.rua} onChange={e => setLocalizacaoTemp(l => ({ ...l, rua: e.target.value }))} className="cadastro-popup-input mb-2" />
+                  <input
+                    type="text"
+                    placeholder="Logradouro"
+                    value={localizacaoTemp.rua}
+                    onChange={(e) => setLocalizacaoTemp((l) => ({ ...l, rua: e.target.value }))}
+                    className="cadastro-popup-input mb-2"
+                  />
                   <div className="d-flex gap-2 mb-2">
-                    <input type="text" placeholder="Número" value={localizacaoTemp.numero} onChange={e => setLocalizacaoTemp(l => ({ ...l, numero: e.target.value }))} className="cadastro-popup-input flex-fill" />
-                    <input type="text" placeholder="Bairro" value={localizacaoTemp.bairro} onChange={e => setLocalizacaoTemp(l => ({ ...l, bairro: e.target.value }))} className="cadastro-popup-input flex-fill" />
+                    <input
+                      type="text"
+                      placeholder="Número"
+                      value={localizacaoTemp.numero}
+                      onChange={(e) => setLocalizacaoTemp((l) => ({ ...l, numero: e.target.value }))}
+                      className="cadastro-popup-input flex-fill"
+                    />
+                    <input
+                      type="text"
+                      placeholder="Bairro"
+                      value={localizacaoTemp.bairro}
+                      onChange={(e) => setLocalizacaoTemp((l) => ({ ...l, bairro: e.target.value }))}
+                      className="cadastro-popup-input flex-fill"
+                    />
                   </div>
                   <div className="d-flex gap-2 mb-3">
-                    <input type="text" placeholder="Cidade" value={localizacaoTemp.cidade} onChange={e => setLocalizacaoTemp(l => ({ ...l, cidade: e.target.value }))} className="cadastro-popup-input flex-fill" />
-                    <input type="text" placeholder="Estado" value={localizacaoTemp.estado} onChange={e => setLocalizacaoTemp(l => ({ ...l, estado: e.target.value }))} className="cadastro-popup-input flex-fill" />
+                    <input
+                      type="text"
+                      placeholder="Cidade"
+                      value={localizacaoTemp.cidade}
+                      onChange={(e) => setLocalizacaoTemp((l) => ({ ...l, cidade: e.target.value }))}
+                      className="cadastro-popup-input flex-fill"
+                    />
+                    <input
+                      type="text"
+                      placeholder="Estado"
+                      value={localizacaoTemp.estado}
+                      onChange={(e) => setLocalizacaoTemp((l) => ({ ...l, estado: e.target.value }))}
+                      className="cadastro-popup-input flex-fill"
+                    />
                   </div>
                 </div>
               )}
+
               {popup.field.type === "textarea" && (
-                <textarea value={popup.tempValue} onChange={e => setPopup(p => ({ ...p, tempValue: e.target.value }))} rows={3} className="cadastro-popup-input mb-3" autoFocus />
+                <textarea
+                  value={popup.tempValue}
+                  onChange={(e) => setPopup((p) => ({ ...p, tempValue: e.target.value }))}
+                  rows={3}
+                  className="cadastro-popup-input mb-3"
+                  autoFocus
+                />
               )}
+
               {popup.field.type === "text" && (
-                <input type="text" value={popup.tempValue} onChange={e => setPopup(p => ({ ...p, tempValue: e.target.value }))} className="cadastro-popup-input mb-3" autoFocus />
+                <input
+                  type="text"
+                  value={popup.tempValue}
+                  onChange={(e) => setPopup((p) => ({ ...p, tempValue: e.target.value }))}
+                  className="cadastro-popup-input mb-3"
+                  autoFocus
+                />
               )}
+
               {popup.field.type === "date" && (
-                <input type="date" value={popup.tempValue} onChange={e => setPopup(p => ({ ...p, tempValue: e.target.value }))} className="cadastro-popup-input mb-3" autoFocus />
+                <input
+                  type="date"
+                  value={popup.tempValue}
+                  onChange={(e) => setPopup((p) => ({ ...p, tempValue: e.target.value }))}
+                  className="cadastro-popup-input mb-3"
+                  autoFocus
+                />
               )}
+
               <div className="d-flex justify-content-end gap-2">
                 <button type="button" onClick={closePopup} className="btn btn-light cadastro-popup-btn">Cancelar</button>
                 <button type="button" onClick={handlePopupSave} className="btn btn-success cadastro-popup-btn">Salvar</button>

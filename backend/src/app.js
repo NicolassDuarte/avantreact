@@ -11,7 +11,9 @@ app.use(cors({
   allowedHeaders: ["Content-Type", "Authorization"]
 }));
 
-app.use(express.json());
+// AUMENTE OS LIMITES DO BODY PARSER (JSON + URLENCODED)
+app.use(express.json({ limit: '50mb' }));
+app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 
 // Importando rotas
 const categoriasRoutes = require("./routes/categoriasRoutes");

@@ -12,6 +12,20 @@ const TrocaModal = ({ show, onHide, userItens, onPropostaTroca, itemDesejado }) 
         }
     };
 
+    // Função para obter a URL da imagem corretamente
+    const getImageUrl = (imagemUrl) => {
+        if (!imagemUrl || !imagemUrl.length) return "/placeholder-item.png";
+
+        const firstImage = imagemUrl[0];
+        if (firstImage.startsWith('http')) {
+            return firstImage;
+        } else if (firstImage.startsWith('/uploads')) {
+            return `http://localhost:3001${firstImage}`;
+        } else {
+            return firstImage;
+        }
+    };
+
     return (
         <Modal show={show} onHide={onHide} size="lg">
             <Modal.Header closeButton>
@@ -21,8 +35,10 @@ const TrocaModal = ({ show, onHide, userItens, onPropostaTroca, itemDesejado }) 
                 <div className="troca-info">
                     <h5>Você está propondo uma troca por:</h5>
                     <div className="desejado-card">
-                        <img src={itemDesejado.imagemUrl ? `http://localhost:3001${itemDesejado.imagemUrl}` : "/placeholder-item.png"}
-                            alt={itemDesejado.titulo} />
+                        <img
+                            src={getImageUrl(itemDesejado.imagemUrl)}
+                            alt={itemDesejado.titulo}
+                        />
                         <div>
                             <h6>{itemDesejado.titulo}</h6>
                             <p>{itemDesejado.descricao}</p>
@@ -41,10 +57,12 @@ const TrocaModal = ({ show, onHide, userItens, onPropostaTroca, itemDesejado }) 
                                 className={`item-card ${itemSelecionado === item.id_item ? 'selected' : ''}`}
                                 onClick={() => setItemSelecionado(item.id_item)}
                             >
-                                <img src={item.imagemUrl ? `http://localhost:3001${item.imagemUrl}` : "/placeholder-item.png"}
-                                    alt={item.titulo} />
+                                <img
+                                    src={getImageUrl(item.imagemUrl)}
+                                    alt={item.titulo}
+                                />
                                 <h6>{item.titulo}</h6>
-                                <p>{item.descricao.substring(0, 60)}...</p>
+                                <p>{item.descricao?.substring(0, 60)}...</p>
                             </div>
                         ))
                     ) : (

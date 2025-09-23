@@ -95,6 +95,41 @@ const getUsuarioProfileHandler = async (req, res) => {
   }
 };
 
+const updateUsuarioSenhaHandler = async (req, res) => {
+  const id_usuario = Number.parseInt(req.params.id_usuario);
+  const { senhaAtual, novaSenha } = req.body;
+
+  try {
+    // Buscar usuário
+    const usuario = await getUsuarioById(id_usuario);
+    if (!usuario) {
+      return res.status(404).json({ error: "Usuário não encontrado" });
+    }
+
+    // Verificar senha atual
+    const bcrypt = require('bcryptjs');
+    const senhaValida = await bcrypt.compare(senhaAtual, usuario.senha);
+    if (!senhaValida) {
+      return res.status(400).json({ error: "Senha atual incorreta" });
+    }
+
+    // Atualizar senha
+    const usuarioAtualizado = await updateUsuario(
+      id_usuario,
+      usuario.nome,
+      usuario.email,
+      novaSenha
+    );
+
+    // Não retornar a senha
+    const { senha, ...usuarioSemSenha } = usuarioAtualizado;
+    return res.status(200).json(usuarioSemSenha);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ error: "Erro ao atualizar senha" });
+  }
+};
+
 // Adicione esta exportação
 module.exports = {
   getAllUsuariosHandler,
@@ -102,5 +137,6 @@ module.exports = {
   getUsuarioProfileHandler, // Nova exportação
   addUsuarioHandler,
   updateUsuarioHandler,
-  deleteUsuarioHandler
+  deleteUsuarioHandler,
+  updateUsuarioSenhaHandler
 };
