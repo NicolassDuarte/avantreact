@@ -188,3 +188,96 @@
     height: 150px;
     width: 130px;
 }
+
+@media (max-width: 991px) {
+    .hero .text-troca {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .hero .img-hero {
+        max-width: 280px;
+        margin: 0 auto;
+    }
+
+    .sobre .img-sobre {
+        max-width: 280px;
+        margin-bottom: 20px;
+    }
+
+    .comentarios .row {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .comentarios .col-md-5 {
+        width: 100%;
+        max-width: 400px;
+    }
+}
+
+/* Celulares */
+@media (max-width: 767px) {
+    .section-home {
+        padding: 50px 15px;
+    }
+
+    /* Hero */
+    .hero .text-troca h2 {
+        font-size: 1.8rem;
+    }
+
+    .hero .text-troca p {
+        font-size: 0.95rem;
+    }
+
+    .hero .btn-objetos {
+        width: 100%;
+        padding: 12px;
+        border-radius: 8px;
+        font-size: 1rem;
+    }
+
+    /* Populares */
+    .populares .row {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .populares .col-md-4 {
+        width: 100%;
+        max-width: 350px;
+        margin-bottom: 20px;
+    }
+
+    .populares .card-popular {
+        min-height: auto;
+        padding: 20px;
+    }
+
+    .populares .btn-trocar {
+        width: 100%;
+        border-radius: 8px;
+    }
+
+    /* Comentários */
+    .comentarios .card-comentario {
+        width: 100%;
+        max-width: 350px;
+        margin: 0 auto 20px auto;
+    }
+
+    /* Sobre nós */
+    .sobre .row {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .sobre .col-md-6 {
+        width: 100%;
+    }
+
+    .sobre h2 {
+        font-size: 1.6rem;
+    }
+}

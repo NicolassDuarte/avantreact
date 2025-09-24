@@ -4,6 +4,7 @@ const prisma = require('../prisma');
  */
 const getAllItens = async () => {
   return prisma.item.findMany({
+    where: { status: "DISPONIVEL" }, // <- só itens disponíveis
     include: { dono: true, categoria: true },
     orderBy: { criadoEm: 'desc' },
   });

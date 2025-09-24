@@ -190,13 +190,9 @@ const addTroca = async (itemOferecidoId, itemDesejadoId, ofertanteId, receptorId
 };
 
 const updateTroca = async (id_troca, status) => {
-  return prisma.troca.update({
-    where: {
-      id_troca: id_troca,
-    },
-    data: {
-      status: status,
-    },
+  const troca = await prisma.troca.update({
+    where: { id_troca },
+    data: { status },
     include: {
       itemOferecido: true,
       itemDesejado: true,
@@ -204,7 +200,23 @@ const updateTroca = async (id_troca, status) => {
       receptor: true
     }
   });
+
+  // Se a troca foi aceita, marcar os itens como trocados
+  if (status === "ACEITA") {
+    await prisma.item.update({
+      where: { id_item: troca.itemOferecidoId },
+      data: { status: "INDISPONIVEL" }
+    });
+
+    await prisma.item.update({
+      where: { id_item: troca.itemDesejadoId },
+      data: { status: "INDISPONIVEL" }
+    });
+  }
+
+  return troca;
 };
+
 
 const deleteTroca = async (id_troca) => {
   const troca = await getTrocaById(id_troca);
