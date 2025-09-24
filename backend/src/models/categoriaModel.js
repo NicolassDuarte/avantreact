@@ -1,6 +1,4 @@
-const { PrismaClient } = require("../../generated/prisma");
-const prisma = new PrismaClient()
-
+const { PrismaClient } = require("../prisma");
 
 const getAllCategorias = async () => {
   return await prisma.categoria.findMany({
@@ -14,10 +12,9 @@ const getCategoriaById = async (id_categoria) => {
   console.log("ID recebido no model:", id_categoria); // debug
   return await prisma.categoria.findUnique({
     where: { id_categoria: parseInt(id_categoria) },
-    include: { itens: true }
+    include: { itens: true },
   });
 };
-
 
 const addCategoria = async (nome) => {
   return await prisma.categoria.create({
@@ -29,15 +26,15 @@ const addCategoria = async (nome) => {
 
 const deleteCategoria = async (id_categoria) => {
   const categoria = await prisma.categoria.findUnique({
-    where: { id_categoria: parseInt(id_categoria) }
+    where: { id_categoria: parseInt(id_categoria) },
   });
   if (!categoria) {
-    return null; 
+    return null;
   }
   await prisma.categoria.delete({
-    where: { id_categoria: parseInt(id_categoria) }
+    where: { id_categoria: parseInt(id_categoria) },
   });
-  return categoria; 
+  return categoria;
 };
 
 const updateCategoria = async (id_categoria, nome) => {
@@ -54,15 +51,14 @@ const updateCategoria = async (id_categoria, nome) => {
     data: {
       nome: nome,
     },
-    include: { itens: true }, 
+    include: { itens: true },
   });
 };
-
 
 module.exports = {
   getAllCategorias,
   getCategoriaById,
   addCategoria,
   deleteCategoria,
-  updateCategoria
+  updateCategoria,
 };
